@@ -32,6 +32,6 @@ You can tell the `Loader` to search explicit paths for classes with specific pre
     // classes in this path as well:
     $loader->addPath('vendor\package\\', '/path/to/vendor.package/tests');
 
-(Note that you should end the prefixes with a double-backslash in the case of namespaces, not a single backslash.)
+(Note that you should end formal namespace prefixes with a double-backslash, not a single backslash.)
 
 If the `Loader` cannot find a class in the explicit paths for the specific prefix given, it will fall back to looking in the include-path.
