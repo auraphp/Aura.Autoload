@@ -7,16 +7,13 @@ The Aura Autoload package provides a [PSR-0](http://groups.google.com/group/php-
 Implicit Usage
 ==============
 
-Create an instance of the `Loader`, then add PEAR-style class prefixes or formal namespace prefixes, along with any explicit paths you want to search when autoloading classes with that prefix.
+Create an instance of the `Loader` and register it with SPL.
 
     <?php
-    // easy way to get a new instance
     $loader = require '/path/to/aura.autoloader/scripts/instance.php';
-    
-    // register the loader with SPL
     $loader->register();
 
-The `Loader` will look for PSR-0 compliant class names in the include-path, and throw an `Exception_NotFound` if it cannot find one.
+The `Loader` will now look for PSR-0 compliant class names in the include-path, and throw an `Exception_NotFound` if it cannot find one.
 
 
 Explicit Usage
