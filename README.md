@@ -7,7 +7,7 @@ The Aura Autoload package provides a [PSR-0](http://groups.google.com/group/php-
 Implicit Usage
 ==============
 
-Create an instance of the loader, then add PEAR-style class prefixes or formal namespace prefixes, along with any explicit paths you want to search when autoloading classes with that prefix.
+Create an instance of the `Loader`, then add PEAR-style class prefixes or formal namespace prefixes, along with any explicit paths you want to search when autoloading classes with that prefix.
 
     <?php
     // easy way to get a new instance
