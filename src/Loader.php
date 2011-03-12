@@ -34,7 +34,16 @@ class Loader
      * @var array
      * 
      */
-    protected $paths = array();
+    protected $prefixes = array();
+    
+    /**
+     * 
+     * A map of exact class names to their file paths.
+     * 
+     * @var array
+     * 
+     */
+    protected $classes = array();
     
     /**
      * 
@@ -65,9 +74,9 @@ class Loader
      * @return void
      * 
      */
-    public function addPath($name, $path)
+    public function addPrefix($name, $path)
     {
-        $this->paths[$name][] = rtrim($path, DIRECTORY_SEPARATOR);
+        $this->prefixes[$name][] = rtrim($path, DIRECTORY_SEPARATOR);
     }
     
     /**
@@ -77,9 +86,37 @@ class Loader
      * @return array
      * 
      */
-    public function getPaths()
+    public function getPrefixes()
     {
-        return $this->paths;
+        return $this->prefixes;
+    }
+    
+    /**
+     * 
+     * Adds a file path for an exact class name.
+     * 
+     * @param string $name The exact class name.
+     * 
+     * @param string $path The file path to that class.
+     * 
+     * @return void
+     * 
+     */
+    public function addClass($name, $path)
+    {
+        $this->classes[$name] = $path;
+    }
+    
+    /**
+     * 
+     * Returns the list of exact class names and their paths.
+     * 
+     * @return array
+     * 
+     */
+    public function getClasses()
+    {
+        return $this->classes;
     }
     
     /**
@@ -97,8 +134,14 @@ class Loader
      */
     public function load($class)
     {
-        // go through each of the prefixes
-        foreach ($this->paths as $prefix => $paths) {
+        // does the class exist in the explicit class map?
+        if (isset($this->classes[$class])) {
+            $this->loadClassFile($class, $this->classes[$class]);
+            return;
+        }
+        
+        // go through each of the path prefixes
+        foreach ($this->prefixes as $prefix => $paths) {
             
             // get the length of the prefix
             $len = strlen($prefix);

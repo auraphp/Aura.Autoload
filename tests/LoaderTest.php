@@ -24,7 +24,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'aura\autoload\MockAutoloadClass';
         $autoloader = new Loader;
-        $autoloader->addPath('aura\autoload\\', __DIR__);
+        $autoloader->addPrefix('aura\autoload\\', __DIR__);
         $autoloader->load($class);
         
         $classes = get_declared_classes();
@@ -45,7 +45,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testLoadMissing()
     {
         $autoloader = new Loader;
-        $autoloader->addPath('aura\autoload\\', __DIR__);
+        $autoloader->addPrefix('aura\autoload\\', __DIR__);
         $autoloader->load('aura\autoload\NoSuchClass');
     }
     
@@ -60,13 +60,12 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     
     /**
      */
-    public function testLoad_classWithoutNamespace()
+    public function testLoadClassWithoutNamespace()
     {
-        // set a temp directory
-        $dir = AURA_TEST_RUN_SYSTEM_DIR . DIRECTORY_SEPARATOR
+        // set a temp directory in the package
+        $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR
              . 'tmp' . DIRECTORY_SEPARATOR
-             . 'test' . DIRECTORY_SEPARATOR 
-             . 'aura.autoload.Loader';
+             . 'tests';
         
         @mkdir($dir, 0777, true);
         
@@ -76,34 +75,75 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         // write a test file to the temp location
         $code = "<?php class ClassWithoutNamespace {}";
-        $name = "$dir/ClassWithoutNamespace.php";
-        file_put_contents($name, $code);
+        $file = "$dir/ClassWithoutNamespace.php";
+        file_put_contents($file, $code);
+        
+        // set an autoloader with paths
+        $autoloader = new Loader;
+        $autoloader->addPrefix('aura\autoload\\', __DIR__);
         
         // autoload it
         $expect = 'ClassWithoutNamespace';
-        $autoloader = new Loader;
-        $autoloader->addPath('aura\autoload\\', __DIR__);
-        
         $autoloader->load($expect);
         $classes = get_declared_classes();
         $actual = array_pop($classes);
         $this->assertSame($expect, $actual);
         
         // delete the file and directory
-        unlink($name);
+        unlink($file);
         rmdir($dir);
         
         // reset to old include path
         ini_set('include_path', $old_include_path);
     }
     
-    public function testSetPathAndGetPaths()
+    public function testAddPrefixAndGetPrefixes()
     {
         $autoloader = new Loader;
-        $autoloader->addPath('Foo_', '/path/to/Foo');
-        $actual = $autoloader->getPaths();
+        $autoloader->addPrefix('Foo_', '/path/to/Foo');
+        $actual = $autoloader->getPrefixes();
         $expect = array('Foo_' => array('/path/to/Foo'));
         $this->assertSame($expect, $actual);
+    }
+    
+    public function testAddClassAndGetClasses()
+    {
+        $autoloader = new Loader;
+        $autoloader->addClass('FooBar', '/path/to/FooBar.php');
+        $actual = $autoloader->getClasses();
+        $expect = array('FooBar' => '/path/to/FooBar.php');
+        $this->assertSame($expect, $actual);
+    }
+    
+    public function testLoadExactClass()
+    {
+        // set a temp directory in the package
+        $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR
+             . 'tmp' . DIRECTORY_SEPARATOR
+             . 'tests';
+        
+        @mkdir($dir, 0777, true);
+        
+        // write a test file to the temp location
+        $code = "<?php class ClassWithoutNamespaceForAddClass {}";
+        $file = "$dir/ClassWithoutNamespaceForAddClass.php";
+        file_put_contents($file, $code);
+        
+        // set an autoloader with paths
+        $autoloader = new Loader;
+        $expect = 'ClassWithoutNamespaceForAddClass';
+        $autoloader->addClass($expect, $file);
+        
+        // autoload it
+        $expect = 'ClassWithoutNamespaceForAddClass';
+        $autoloader->load($expect);
+        $classes = get_declared_classes();
+        $actual = array_pop($classes);
+        $this->assertSame($expect, $actual);
+        
+        // delete the file and directory
+        unlink($file);
+        rmdir($dir);
     }
     
     public function testClassToFile()
