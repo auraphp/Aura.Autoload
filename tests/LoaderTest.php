@@ -165,4 +165,18 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
             $this->assertSame($expect, $actual);
         }
     }
+    
+    public function testGetSubdirs()
+    {
+        $autoloader = new Loader;
+        $autoloader->addPrefix('aura\autoload\\', __DIR__);
+        
+        $actual = $autoloader->getSubdirs('aura\autoload\MockAutoloadChild');
+        $expect = array (
+            'aura\\autoload\\MockAutoloadChild' => __DIR__ . DIRECTORY_SEPARATOR . 'MockAutoloadChild',
+            'aura\\autoload\\MockAutoloadClass' => __DIR__ . DIRECTORY_SEPARATOR . 'MockAutoloadClass',
+        );
+        
+        $this->assertSame($expect, $actual);
+    }
 }

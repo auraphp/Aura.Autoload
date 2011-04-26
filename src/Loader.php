@@ -45,6 +45,8 @@ class Loader
      */
     protected $classes = array();
     
+    protected $subdirs = array();
+    
     /**
      * 
      * Registers this autoloader with SPL.
@@ -121,6 +123,19 @@ class Loader
     
     /**
      * 
+     * Returns the list of classes and interfaces loaded by the autoloader.
+     * 
+     * @return array An array of key-value pairs where the key is the class
+     * or interface name and the value is the file name.
+     * 
+     */
+    public function getLoaded()
+    {
+        return $this->loaded;
+    }
+    
+    /**
+     * 
      * Loads a class or interface using the class name prefix and path,
      * falling back to the include-path if not found.
      * 
@@ -134,10 +149,19 @@ class Loader
      */
     public function load($class)
     {
+        $file = $this->find($class);
+        if (! $file) {
+            throw new Exception_NotFound($class);
+        }
+        require $file;
+        $this->loaded[$class] = $file;
+    }
+    
+    public function find($class)
+    {
         // does the class exist in the explicit class map?
         if (isset($this->classes[$class])) {
-            $this->loadClassFile($class, $this->classes[$class]);
-            return;
+            return $this->classes[$class];
         }
         
         // go through each of the path prefixes
@@ -160,35 +184,24 @@ class Loader
                     
                     // does it exist?
                     if (file_exists($file)) {
-                        // load it, and done
-                        $this->loadClassFile($class, $file);
-                        return;
+                        // found it; retain in class map
+                        $this->classes[$class] = $file;
+                        return $file;
                     }
                 }
             }
         }
         
         // fall back to the include path
-        $file = $this->classToFile($class);
+        $name = $this->classToFile($class);
         try {
-            $obj = new \SplFileObject($file, 'r', true);
-            $this->loadClassFile($class, $obj->getRealPath());
+            $obj = new \SplFileObject($name, 'r', true);
         } catch (\RuntimeException $e) {
-            throw new Exception_NotFound($file);
+            return false;
         }
-    }
-    
-    /**
-     * 
-     * Returns the list of classes and interfaces loaded by the autoloader.
-     * 
-     * @return array An array of key-value pairs where the key is the class
-     * or interface name and the value is the file name.
-     * 
-     */
-    public function getLoaded()
-    {
-        return $this->loaded;
+        $file = $obj->getRealPath();
+        $this->classes[$class] = $file;
+        return $file;
     }
     
     /**
@@ -229,18 +242,33 @@ class Loader
     
     /**
      * 
-     * Loads a class file, and retains a mapping for it in `$loaded`.
+     * Returns an array of expected subdirectory names for a class and all
+     * its parents.
      * 
-     * @param string $class The class to load.
+     * @param string $class The class name to get expected subdirectory names
+     * for.
      * 
-     * @param string $file The file where the class resides.
-     * 
-     * @return void
+     * @return array The array of expected subdirectories.
      * 
      */
-    protected function loadClassFile($class, $file)
+    public function getSubdirs($class)
     {
-        require $file;
-        $this->loaded[$class] = $file;
-    }
+        // do we already have subdirs for the class?
+        if (isset($this->subdirs[$class])) {
+            return $this->subdirs[$class];
+        }
+        
+        // get all parent classes, and the class itself
+        $list = array_values(class_parents($class));
+        array_unshift($list, $class);
+        
+        // find the expected subdir name for each class
+        foreach ($list as $name) {
+            $file = $this->find($name);
+            $this->subdirs[$class][$name] = dirname($file)
+                                          . DIRECTORY_SEPARATOR
+                                          . substr(basename($file), 0, -4);
+        }
+        return $this->subdirs[$class];
+    }    
 }
