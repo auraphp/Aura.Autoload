@@ -45,6 +45,22 @@ class Loader
      */
     protected $classes = array();
     
+    /**
+     * 
+     * The directories containing a particular class and its parents.
+     * 
+     * @var array
+     * 
+     */
+    protected $dirs = array();
+    
+    /**
+     * 
+     * The expected subdirectories for a particular class and its parents.
+     * 
+     * @var array
+     * 
+     */
     protected $subdirs = array();
     
     /**
@@ -149,6 +165,10 @@ class Loader
      */
     public function load($class)
     {
+        if (class_exists($class, false)) {
+            throw new Exception_AlreadyLoaded($class);
+        }
+        
         $file = $this->find($class);
         if (! $file) {
             throw new Exception_NotFound($class);
@@ -157,6 +177,16 @@ class Loader
         $this->loaded[$class] = $file;
     }
     
+    /**
+     * 
+     * Finds the path to a class or interface using the prefixes and 
+     * include-path.
+     * 
+     * @param string $class The class or interface to find.
+     * 
+     * @return The absolute path to the class or interface.
+     * 
+     */
     public function find($class)
     {
         // does the class exist in the explicit class map?
@@ -242,7 +272,37 @@ class Loader
     
     /**
      * 
-     * Returns an array of expected subdirectory names for a class and all
+     * Returns an array of containing directory names for a class and each of
+     * its parents.
+     * 
+     * @param string $class The class name to get containing directory names
+     * for.
+     * 
+     * @return array The array of containing directories.
+     * 
+     */
+    public function getDirs($class)
+    {
+        // do we already have dirs for the class?
+        if (isset($this->dirs[$class])) {
+            return $this->dirs[$class];
+        }
+        
+        // get all parent classes, and the class itself
+        $list = array_values(class_parents($class));
+        array_unshift($list, $class);
+        
+        // find the expected dir name holding class
+        foreach ($list as $name) {
+            $file = $this->find($name);
+            $this->dirs[$class][$name] = dirname($file);
+        }
+        return $this->dirs[$class];
+    }
+    
+    /**
+     * 
+     * Returns an array of expected subdirectory names for a class and each of
      * its parents.
      * 
      * @param string $class The class name to get expected subdirectory names
@@ -270,5 +330,5 @@ class Loader
                                           . substr(basename($file), 0, -4);
         }
         return $this->subdirs[$class];
-    }    
+    }
 }
