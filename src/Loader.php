@@ -6,13 +6,13 @@
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
-namespace aura\autoload;
+namespace Aura\Autoload;
 
 /**
  * 
  * An SPL autoloader adhering to [PSR-0](http://groups.google.com/group/php-standards/web/psr-0-final-proposal).
  * 
- * @package aura.autoload
+ * @package Aura.Autoload
  * 
  */
 class Loader
