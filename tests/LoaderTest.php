@@ -39,6 +39,17 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect, $actual);
     }
     
+    public function testLoadAlreadyLoaded()
+    {
+        $class = 'Aura\Autoload\MockAutoloadAlready';
+        $autoloader = new Loader;
+        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->load($class);
+        
+        $this->setExpectedException('Aura\Autoload\Exception_AlreadyLoaded');
+        $autoloader->load($class);
+    }
+    
     /**
      * @expectedException \Aura\Autoload\Exception_NotFound
      */
@@ -166,17 +177,41 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         }
     }
     
+    public function testGetDirs()
+    {
+        $autoloader = new Loader;
+        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        
+        $expect = array (
+            'Aura\\Autoload\\MockAutoloadChild' => __DIR__,
+            'Aura\\Autoload\\MockAutoloadClass' => __DIR__,
+        );
+        
+        // try once for comparison
+        $actual = $autoloader->getDirs('Aura\Autoload\MockAutoloadChild');
+        $this->assertSame($expect, $actual);
+        
+        // try again for code coverage on the "already exists" block
+        $actual = $autoloader->getDirs('Aura\Autoload\MockAutoloadChild');
+        $this->assertSame($expect, $actual);
+    }
+    
     public function testGetSubdirs()
     {
         $autoloader = new Loader;
         $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
         
-        $actual = $autoloader->getSubdirs('Aura\Autoload\MockAutoloadChild');
         $expect = array (
-            'aura\\autoload\\MockAutoloadChild' => __DIR__ . DIRECTORY_SEPARATOR . 'MockAutoloadChild',
-            'aura\\autoload\\MockAutoloadClass' => __DIR__ . DIRECTORY_SEPARATOR . 'MockAutoloadClass',
+            'Aura\\Autoload\\MockAutoloadChild' => __DIR__ . DIRECTORY_SEPARATOR . 'MockAutoloadChild',
+            'Aura\\Autoload\\MockAutoloadClass' => __DIR__ . DIRECTORY_SEPARATOR . 'MockAutoloadClass',
         );
         
+        // try once for comparison
+        $actual = $autoloader->getSubdirs('Aura\Autoload\MockAutoloadChild');
+        $this->assertSame($expect, $actual);
+        
+        // try again for code coverage on the "already exists" block
+        $actual = $autoloader->getSubdirs('Aura\Autoload\MockAutoloadChild');
         $this->assertSame($expect, $actual);
     }
 }
