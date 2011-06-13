@@ -6,7 +6,7 @@
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
-namespace aura\autoload;
+namespace Aura\Autoload;
 
 /**
  * 
@@ -74,7 +74,7 @@ class Loader
      * 
      * Adds a directory path for a class name prefix.
      * 
-     * @param string $name The class name prefix, e.g. 'aura\framework\\' or
+     * @param string $name The class name prefix, e.g. 'Aura\Framework\\' or
      * 'Zend_'.
      * 
      * @param string $path The absolute path leading to the classes for that
@@ -150,19 +150,19 @@ class Loader
      * 
      * @return void
      * 
-     * @throws Exception_NotFound when the file for the class or 
+     * @throws Exception\NotFound when the file for the class or 
      * interface is not found.
      * 
      */
     public function load($class)
     {
         if (class_exists($class, false)) {
-            throw new Exception_AlreadyLoaded($class);
+            throw new Exception\AlreadyLoaded($class);
         }
         
         $file = $this->find($class);
         if (! $file) {
-            throw new Exception_NotFound($class);
+            throw new Exception\NotFound($class);
         }
         require $file;
         $this->loaded[$class] = $file;

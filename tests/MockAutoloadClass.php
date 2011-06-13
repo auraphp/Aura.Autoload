@@ -1,3 +1,3 @@
 <?php
-namespace aura\autoload;
+namespace Aura\Autoload;
 class MockAutoloadClass {}
