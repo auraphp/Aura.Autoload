@@ -210,6 +210,6 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         $spec = 'aura\nonesuch';
         $actual = $autoloader->findDir($spec);
-        $this->assertFalse($actual);
+        $this->assertSame(array(), $actual);
     }
 }

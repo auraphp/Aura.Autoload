@@ -251,7 +251,7 @@ class Loader
         
         // assume that it's a directory for a namespace or class,
         // not a class file itself.
-        $this->dirs[$spec] = false;
+        $this->dirs[$spec] = array();
         
         // go through each of the path prefixes for classes
         foreach ($this->prefixes as $prefix => $paths) {
@@ -269,13 +269,15 @@ class Loader
             }
             
             // strip the prefix from the spec ...
-            $spec = substr($spec, $len);
+            $tmp = substr($spec, $len);
+            $tmp = ltrim($tmp, '\\');
+            $tmp = str_replace('\\', DIRECTORY_SEPARATOR, $tmp);
             
             // ... and go through each of the paths for the prefix
             foreach ($paths as $path) {
                 
                 // add the remaining spec to the path
-                $dir = $path . DIRECTORY_SEPARATOR . $spec;
+                $dir = $path . DIRECTORY_SEPARATOR . $tmp;
                 
                 // does it exist?
                 if (is_dir($dir)) {
