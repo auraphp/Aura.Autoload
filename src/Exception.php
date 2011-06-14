@@ -12,7 +12,7 @@ namespace Aura\Autoload;
  * 
  * Generic package exception.
  * 
- * @package aura.autoload
+ * @package Aura.Autoload
  * 
  */
 class Exception extends \Exception {}

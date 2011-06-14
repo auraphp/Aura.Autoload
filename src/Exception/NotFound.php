@@ -12,7 +12,7 @@ namespace Aura\Autoload\Exception;
  * 
  * Indicates the Loader failed to find a class file.
  * 
- * @package aura.autoload
+ * @package Aura.Autoload
  * 
  */
 class NotFound extends \Aura\Autoload\Exception {}
