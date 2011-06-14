@@ -78,7 +78,7 @@ class Loader
      * 'Zend_'.
      * 
      * @param string $path The absolute path leading to the classes for that
-     * prefix, e.g. '/path/to/system/package/aura.framework-dev/src'.
+     * prefix, e.g. '/path/to/system/package/Aura.Framework-dev/src'.
      * 
      * @return void
      * 
