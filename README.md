@@ -1,1 +1,1 @@
-Read Documentation : [http://auraphp.github.com/aura.autoload](http://auraphp.github.com/aura.autoload)
+Read Documentation : [http://auraphp.github.com/Aura.Autoload](http://auraphp.github.com/Aura.Autoload)

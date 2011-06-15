@@ -56,15 +56,6 @@ class Loader
     
     /**
      * 
-     * The expected subdirectories for a particular class and its parents.
-     * 
-     * @var array
-     * 
-     */
-    protected $subdirs = array();
-    
-    /**
-     * 
      * Registers this autoloader with SPL.
      * 
      * @param string $config_mode The config mode of the Aura environment.
@@ -83,11 +74,11 @@ class Loader
      * 
      * Adds a directory path for a class name prefix.
      * 
-     * @param string $name The class name prefix, e.g. 'aura\framework\\' or
+     * @param string $name The class name prefix, e.g. 'Aura\Framework\\' or
      * 'Zend_'.
      * 
      * @param string $path The absolute path leading to the classes for that
-     * prefix, e.g. '/path/to/system/package/aura.framework-dev/src'.
+     * prefix, e.g. '/path/to/system/package/Aura.Framework-dev/src'.
      * 
      * @return void
      * 
@@ -159,19 +150,19 @@ class Loader
      * 
      * @return void
      * 
-     * @throws Exception_NotFound when the file for the class or 
+     * @throws Exception\NotFound when the file for the class or 
      * interface is not found.
      * 
      */
     public function load($class)
     {
         if (class_exists($class, false)) {
-            throw new Exception_AlreadyLoaded($class);
+            throw new Exception\AlreadyLoaded($class);
         }
         
         $file = $this->find($class);
         if (! $file) {
-            throw new Exception_NotFound($class);
+            throw new Exception\NotFound($class);
         }
         require $file;
         $this->loaded[$class] = $file;
@@ -200,24 +191,26 @@ class Loader
             // get the length of the prefix
             $len = strlen($prefix);
             
-            // if the prefix matches ...
-            if (substr($class, 0, $len) == $prefix) {
-                
-                // ... strip the prefix from the class ...
-                $spec = substr($class, $len);
+            // does the prefix match?
+            if (substr($class, 0, $len) != $prefix) {
+                // no
+                continue;
+            }
             
-                // ... and go through each of the paths for the prefix
-                foreach ($paths as $path) {
-                    
-                    // convert the remaining spec to a file name
-                    $file = $path . DIRECTORY_SEPARATOR . $this->classToFile($spec);
-                    
-                    // does it exist?
-                    if (file_exists($file)) {
-                        // found it; retain in class map
-                        $this->classes[$class] = $file;
-                        return $file;
-                    }
+            // strip the prefix from the class ...
+            $spec = substr($class, $len);
+            
+            // ... and go through each of the paths for the prefix
+            foreach ($paths as $path) {
+                
+                // convert the remaining spec to a file name
+                $file = $path . DIRECTORY_SEPARATOR . $this->classToFile($spec);
+                
+                // does it exist?
+                if (file_exists($file)) {
+                    // found it; retain in class map
+                    $this->classes[$class] = $file;
+                    return $file;
                 }
             }
         }
@@ -232,6 +225,70 @@ class Loader
         $file = $obj->getRealPath();
         $this->classes[$class] = $file;
         return $file;
+    }
+    
+    // find the dir for a namespace or class directory, 
+    // or the containing dir for a class.
+    // 
+    // because we can have multiple locations for prefixes,
+    // does that mean we can have multiple directories?
+    public function findDir($spec)
+    {
+        // make sure we don't have a trailing namespace separator
+        $spec = rtrim($spec, '\\');
+        
+        // do we already have a dir for the spec?
+        if (isset($this->dirs[$spec])) {
+            return $this->dirs[$spec];
+        }
+        
+        // is the spec a known class?
+        $class = $this->find($spec);
+        if ($class) {
+            $this->dirs[$spec][] = dirname($class);
+            return $this->dirs[$spec];
+        }
+        
+        // assume that it's a directory for a namespace or class,
+        // not a class file itself.
+        $this->dirs[$spec] = array();
+        
+        // go through each of the path prefixes for classes
+        foreach ($this->prefixes as $prefix => $paths) {
+            
+            // remove the trailing namespace separator
+            $prefix = rtrim($prefix, '\\');
+            
+            // get the length of the prefix
+            $len = strlen($prefix);
+            
+            // does the prefix match?
+            if (substr($spec, 0, $len) != $prefix) {
+                // no
+                continue;
+            }
+            
+            // strip the prefix from the spec ...
+            $tmp = substr($spec, $len);
+            $tmp = ltrim($tmp, '\\');
+            $tmp = str_replace('\\', DIRECTORY_SEPARATOR, $tmp);
+            
+            // ... and go through each of the paths for the prefix
+            foreach ($paths as $path) {
+                
+                // add the remaining spec to the path
+                $dir = $path . DIRECTORY_SEPARATOR . $tmp;
+                
+                // does it exist?
+                if (is_dir($dir)) {
+                    // found it; retain in dir map
+                    $this->dirs[$spec][] = $dir;
+                }
+            }
+        }
+        
+        // done
+        return $this->dirs[$spec];
     }
     
     /**
@@ -268,67 +325,5 @@ class Loader
         
         // done!
         return $file;
-    }
-    
-    /**
-     * 
-     * Returns an array of containing directory names for a class and each of
-     * its parents.
-     * 
-     * @param string $class The class name to get containing directory names
-     * for.
-     * 
-     * @return array The array of containing directories.
-     * 
-     */
-    public function getDirs($class)
-    {
-        // do we already have dirs for the class?
-        if (isset($this->dirs[$class])) {
-            return $this->dirs[$class];
-        }
-        
-        // get all parent classes, and the class itself
-        $list = array_values(class_parents($class));
-        array_unshift($list, $class);
-        
-        // find the expected dir name holding class
-        foreach ($list as $name) {
-            $file = $this->find($name);
-            $this->dirs[$class][$name] = dirname($file);
-        }
-        return $this->dirs[$class];
-    }
-    
-    /**
-     * 
-     * Returns an array of expected subdirectory names for a class and each of
-     * its parents.
-     * 
-     * @param string $class The class name to get expected subdirectory names
-     * for.
-     * 
-     * @return array The array of expected subdirectories.
-     * 
-     */
-    public function getSubdirs($class)
-    {
-        // do we already have subdirs for the class?
-        if (isset($this->subdirs[$class])) {
-            return $this->subdirs[$class];
-        }
-        
-        // get all parent classes, and the class itself
-        $list = array_values(class_parents($class));
-        array_unshift($list, $class);
-        
-        // find the expected subdir name for each class
-        foreach ($list as $name) {
-            $file = $this->find($name);
-            $this->subdirs[$class][$name] = dirname($file)
-                                          . DIRECTORY_SEPARATOR
-                                          . substr(basename($file), 0, -4);
-        }
-        return $this->subdirs[$class];
     }
 }

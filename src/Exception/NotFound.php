@@ -6,13 +6,13 @@
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
-namespace aura\autoload;
+namespace Aura\Autoload\Exception;
 
 /**
  * 
  * Indicates the Loader failed to find a class file.
  * 
- * @package aura.autoload
+ * @package Aura.Autoload
  * 
  */
-class Exception_NotFound extends Exception {}
+class NotFound extends \Aura\Autoload\Exception {}

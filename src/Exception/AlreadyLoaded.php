@@ -6,13 +6,13 @@
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
-namespace aura\autoload;
+namespace Aura\Autoload\Exception;
 
 /**
  * 
  * Indicates a class has already been loaded.
  * 
- * @package aura.autoload
+ * @package Aura.Autoload
  * 
  */
-class Exception_AlreadyLoaded extends Exception {}
+class AlreadyLoaded extends \Aura\Autoload\Exception {}
