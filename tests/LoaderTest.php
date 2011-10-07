@@ -212,4 +212,17 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $actual = $autoloader->findDir($spec);
         $this->assertSame(array(), $actual);
     }
+    
+    public function testSetClasses()
+    {
+        $autoloader = new Loader;
+        $expect = array(
+            'FooBar' => '/path/to/FooBar.php',
+            'BazDib' => '/path/to/BazDib.php',
+        );
+        
+        $autoloader->setClasses($expect);
+        $actual = $autoloader->getClasses();;
+        $this->assertSame($expect, $actual);
+    }
 }
