@@ -117,10 +117,10 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect, $actual);
     }
     
-    public function testAddClassAndGetClasses()
+    public function testSetClassAndGetClasses()
     {
         $autoloader = new Loader;
-        $autoloader->addClass('FooBar', '/path/to/FooBar.php');
+        $autoloader->setClass('FooBar', '/path/to/FooBar.php');
         $actual = $autoloader->getClasses();
         $expect = array('FooBar' => '/path/to/FooBar.php');
         $this->assertSame($expect, $actual);
@@ -136,17 +136,17 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         @mkdir($dir, 0777, true);
         
         // write a test file to the temp location
-        $code = "<?php class ClassWithoutNamespaceForAddClass {}";
-        $file = "$dir/ClassWithoutNamespaceForAddClass.php";
+        $code = "<?php class ClassWithoutNamespaceForSetClass {}";
+        $file = "$dir/ClassWithoutNamespaceForSetClass.php";
         file_put_contents($file, $code);
         
         // set an autoloader with paths
         $autoloader = new Loader;
-        $expect = 'ClassWithoutNamespaceForAddClass';
-        $autoloader->addClass($expect, $file);
+        $expect = 'ClassWithoutNamespaceForSetClass';
+        $autoloader->setClass($expect, $file);
         
         // autoload it
-        $expect = 'ClassWithoutNamespaceForAddClass';
+        $expect = 'ClassWithoutNamespaceForSetClass';
         $autoloader->load($expect);
         $classes = get_declared_classes();
         $actual = array_pop($classes);
@@ -209,5 +209,18 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $spec = 'aura\nonesuch';
         $actual = $autoloader->findDir($spec);
         $this->assertSame(array(), $actual);
+    }
+    
+    public function testSetClasses()
+    {
+        $autoloader = new Loader;
+        $expect = array(
+            'FooBar' => '/path/to/FooBar.php',
+            'BazDib' => '/path/to/BazDib.php',
+        );
+        
+        $autoloader->setClasses($expect);
+        $actual = $autoloader->getClasses();;
+        $this->assertSame($expect, $actual);
     }
 }

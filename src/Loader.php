@@ -102,7 +102,7 @@ class Loader
     
     /**
      * 
-     * Adds a file path for an exact class name.
+     * Sets the file path for an exact class name.
      * 
      * @param string $name The exact class name.
      * 
@@ -111,9 +111,24 @@ class Loader
      * @return void
      * 
      */
-    public function addClass($name, $path)
+    public function setClass($name, $path)
     {
         $this->classes[$name] = $path;
+    }
+    
+    /**
+     * 
+     * Sets all file paths for all class names.
+     * 
+     * @param array $classes An array of class-to-file mappings where the key 
+     * is the class name and the value is the file path.
+     * 
+     * @return void
+     * 
+     */
+    public function setClasses(array $classes)
+    {
+        $this->classes = $classes;
     }
     
     /**
@@ -200,11 +215,14 @@ class Loader
             // strip the prefix from the class ...
             $spec = substr($class, $len);
             
+            // .. convert class name to file name ...
+            $ctf = $this->classToFile($spec);
+            
             // ... and go through each of the paths for the prefix
             foreach ($paths as $path) {
                 
                 // convert the remaining spec to a file name
-                $file = $path . DIRECTORY_SEPARATOR . $this->classToFile($spec);
+                $file = $path . DIRECTORY_SEPARATOR . $ctf;
                 
                 // does it exist?
                 if (file_exists($file)) {
