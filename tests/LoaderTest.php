@@ -181,7 +181,6 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $autoloader = new Loader;
         $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
-        
         $spec = 'Aura\Autoload';
         $actual = $autoloader->findDir($spec);
         $expect = array(__DIR__ . DIRECTORY_SEPARATOR);
@@ -192,7 +191,6 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $autoloader = new Loader;
         $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
-        
         $spec = 'Aura\Autoload\MockAutoloadClass';
         $actual = $autoloader->findDir($spec);
         $expect = array(__DIR__);
