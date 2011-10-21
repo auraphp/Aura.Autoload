@@ -14,7 +14,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $autoloader->register();
         $functions = spl_autoload_functions();
         list($object, $method) = array_pop($functions);
-        $this->assertType('Aura\Autoload\Loader', $object);
+        $this->assertInstanceOf('Aura\Autoload\Loader', $object);
         $this->assertSame('load', $method);
     }
     
