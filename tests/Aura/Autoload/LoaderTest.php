@@ -8,7 +8,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
      */
-    public function testRegister()
+    public function testRegisterAndUnregister()
     {
         $autoloader = new Loader;
         $autoloader->register();
@@ -16,6 +16,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         list($object, $method) = array_pop($functions);
         $this->assertInstanceOf('Aura\Autoload\Loader', $object);
         $this->assertSame('load', $method);
+        
+        // now unregister it so we don't pollute later tests
+        $autoloader->unregister();
     }
     
     /**
@@ -24,7 +27,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'Aura\Autoload\MockAutoloadClass';
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
         $autoloader->load($class);
         
         $classes = get_declared_classes();
@@ -43,7 +46,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'Aura\Autoload\MockAutoloadAlready';
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
         $autoloader->load($class);
         
         $this->setExpectedException('Aura\Autoload\Exception\AlreadyLoaded');
@@ -56,7 +59,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testLoadMissing()
     {
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
         $autoloader->load('Aura\Autoload\NoSuchClass');
     }
     
@@ -91,7 +94,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         // set an autoloader with paths
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
         
         // autoload it
         $expect = 'ClassWithoutNamespace';
@@ -180,7 +183,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testFindDir()
     {
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
         $spec = 'Aura\Autoload';
         $actual = $autoloader->findDir($spec);
         $expect = array(__DIR__ . DIRECTORY_SEPARATOR);
@@ -190,7 +193,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testFindDirContainingClass()
     {
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
         $spec = 'Aura\Autoload\MockAutoloadClass';
         $actual = $autoloader->findDir($spec);
         $expect = array(__DIR__);
@@ -204,9 +207,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testFindDirDoesNotExist()
     {
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', __DIR__);
+        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
         
-        $spec = 'aura\nonesuch';
+        $spec = 'Aura\Nonesuch';
         $actual = $autoloader->findDir($spec);
         $this->assertSame(array(), $actual);
     }

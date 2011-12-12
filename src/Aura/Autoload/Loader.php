@@ -58,10 +58,6 @@ class Loader
      * 
      * Registers this autoloader with SPL.
      * 
-     * @param string $config_mode The config mode of the Aura environment.
-     * In 'test' mode, the autoloader looks for classes in the package tests
-     * directories.
-     * 
      * @return void
      * 
      */
@@ -72,13 +68,27 @@ class Loader
     
     /**
      * 
+     * Unregisters this autoloader from SPL.
+     * 
+     * @return void
+     * 
+     */
+    public function unregister()
+    {
+        spl_autoload_unregister(array($this, 'load'));
+    }
+    
+    /**
+     * 
      * Adds a directory path for a class name prefix.
      * 
      * @param string $name The class name prefix, e.g. 'Aura\Framework\\' or
      * 'Zend_'.
      * 
      * @param string $path The absolute path leading to the classes for that
-     * prefix, e.g. '/path/to/system/package/Aura.Framework-dev/src'.
+     * prefix, e.g. `'/path/to/system/package/Aura.Framework-dev/src'`. Note
+     * that the classes must thereafter be in subdirectories of their own, 
+     * e.g. `'/Aura/Framework/'.
      * 
      * @return void
      * 
@@ -212,11 +222,8 @@ class Loader
                 continue;
             }
             
-            // strip the prefix from the class ...
-            $spec = substr($class, $len);
-            
             // .. convert class name to file name ...
-            $ctf = $this->classToFile($spec);
+            $ctf = $this->classToFile($class);
             
             // ... and go through each of the paths for the prefix
             foreach ($paths as $path) {
@@ -287,9 +294,8 @@ class Loader
             }
             
             // strip the prefix from the spec ...
-            $tmp = substr($spec, $len);
-            $tmp = ltrim($tmp, '\\');
-            $tmp = str_replace('\\', DIRECTORY_SEPARATOR, $tmp);
+            $tmp = ltrim($spec, '\\');
+            $tmp = str_replace('\\', DIRECTORY_SEPARATOR, $tmp) . DIRECTORY_SEPARATOR;
             
             // ... and go through each of the paths for the prefix
             foreach ($paths as $path) {
