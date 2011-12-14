@@ -3,6 +3,8 @@
  * 
  * This file is part of the Aura project for PHP.
  * 
+ * @package Aura.Autoload
+ * 
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
@@ -10,9 +12,9 @@ namespace Aura\Autoload;
 
 /**
  * 
- * An SPL autoloader adhering to [PSR-0](http://groups.google.com/group/php-standards/web/psr-0-final-proposal).
+ * An SPL autoloader adhering to [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md).
  * 
- * @package Aura.Autoload
+ * 
  * 
  */
 class Loader
@@ -96,6 +98,28 @@ class Loader
     public function addPrefix($name, $path)
     {
         $this->prefixes[$name][] = rtrim($path, DIRECTORY_SEPARATOR);
+    }
+    
+    /**
+     * Add an array of prefixed name spaces
+     * 
+     * An array of associative name and path.
+     * 
+     * Eg : 
+     * 
+     * $loader->addPrefixes(array(
+     *      'Zend_', '/path/to/zend/library',
+     *      'Aura/Router', '/path/to/project/Aura.Router/src/',
+     *  ));
+     * 
+     * @param array $prefixes
+     * 
+     */
+    public function addPrefixes(array $prefixes = array())
+    {
+        foreach($prefixes as $name => $path ) {
+            $this->addPrefix($name, $path);
+        }
     }
     
     /**
