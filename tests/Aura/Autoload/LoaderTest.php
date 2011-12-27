@@ -40,6 +40,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         $actual = $autoloader->getLoaded();
         $this->assertSame($expect, $actual);
+        // now unregister it so we don't pollute later tests
+        $autoloader->unregister();
     }
     
     public function testLoadAlreadyLoaded()
@@ -189,7 +191,33 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         );
         
         $autoloader->setClasses($expect);
-        $actual = $autoloader->getClasses();;
+        $actual = $autoloader->getClasses();
+        $this->assertSame($expect, $actual);
+    }
+    
+    public function testAddPrefixes()
+    {
+        $class1 = 'Aura\Cli\MockAutoloadCliClass';
+        $class2 = 'Aura\Router\MockAutoloadRouterClass';
+        $autoloader = new Loader;
+        $autoloader->addPrefixes(array(
+            'Aura\Cli\\', dirname(dirname(__DIR__)),
+            'Aura\Router\\', dirname(dirname(__DIR__))
+        ));
+        $autoloader->load($class1);
+        $autoloader->load($class2);
+        $classes = get_declared_classes();
+        $actual = array_pop($classes);
+        $this->assertSame($class2, $actual);
+        $actual = array_pop($classes);
+        $this->assertSame($class1, $actual);
+        
+        $expect = array(
+            $class1 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Cli/MockAutoloadCliClass.php',
+            $class2 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Router/MockAutoloadRouterClass.php',
+        );
+        
+        $actual = $autoloader->getLoaded();
         $this->assertSame($expect, $actual);
     }
 }

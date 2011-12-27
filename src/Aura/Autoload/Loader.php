@@ -3,6 +3,8 @@
  * 
  * This file is part of the Aura project for PHP.
  * 
+ * @package Aura.Autoload
+ * 
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
@@ -10,9 +12,7 @@ namespace Aura\Autoload;
 
 /**
  * 
- * An SPL autoloader adhering to [PSR-0](http://groups.google.com/group/php-standards/web/psr-0-final-proposal).
- * 
- * @package Aura.Autoload
+ * An SPL autoloader adhering to [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md).
  * 
  */
 class Loader
@@ -76,7 +76,7 @@ class Loader
      * @param string $name The class name prefix, e.g. 'Aura\Framework\\' or
      * 'Zend_'.
      * 
-     * @param string $path The absolute path leading to the classes for that
+     * @param array|string $paths The absolute path leading to the classes for that
      * prefix, e.g. `'/path/to/system/package/Aura.Framework-dev/src'`. Note
      * that the classes must thereafter be in subdirectories of their own, 
      * e.g. `'/Aura/Framework/'.
@@ -84,9 +84,42 @@ class Loader
      * @return void
      * 
      */
-    public function addPrefix($name, $path)
+    public function addPrefix($name, $paths)
     {
-        $this->prefixes[$name][] = rtrim($path, DIRECTORY_SEPARATOR);
+        foreach ((array) $paths as $path) {
+            $this->prefixes[$name][] = rtrim($path, DIRECTORY_SEPARATOR);
+        }
+    }
+    
+    /**
+     * Add an array of prefixed name spaces
+     * 
+     * An array of associative name and paths.
+     * 
+     * paths can also be an array or a string
+     * 
+     * Eg : 
+     * 
+     * $loader->addPrefixes(array(
+     *      'Zend_'=> '/path/to/zend/library',
+     *      'Aura' => array(
+     *          '/path/to/project/Aura.Router/src/',
+     *          '/path/to/project/Aura.Di/src/'
+     *      ),
+     *      'Vendor' => array(
+     *          '/path/to/project/Vendor.Package/src/',
+     *      ),
+     *      'Symfony/Component' => 'path/to/Symfony/Component',
+     *  ));
+     * 
+     * @param array $prefixes
+     * 
+     */
+    public function addPrefixes(array $prefixes = array())
+    {
+        foreach ($prefixes as $name => $paths ) {
+            $this->addPrefix($name, $paths);
+        }
     }
     
     /**
