@@ -47,15 +47,6 @@ class Loader
     
     /**
      * 
-     * The directories containing a particular class and its parents.
-     * 
-     * @var array
-     * 
-     */
-    protected $dirs = array();
-    
-    /**
-     * 
      * Registers this autoloader with SPL.
      * 
      * @return void
@@ -250,69 +241,6 @@ class Loader
         $file = $obj->getRealPath();
         $this->classes[$class] = $file;
         return $file;
-    }
-    
-    // find the dir for a namespace or class directory, 
-    // or the containing dir for a class.
-    // 
-    // because we can have multiple locations for prefixes,
-    // does that mean we can have multiple directories?
-    public function findDir($spec)
-    {
-        // make sure we don't have a trailing namespace separator
-        $spec = rtrim($spec, '\\');
-        
-        // do we already have a dir for the spec?
-        if (isset($this->dirs[$spec])) {
-            return $this->dirs[$spec];
-        }
-        
-        // is the spec a known class?
-        $class = $this->find($spec);
-        if ($class) {
-            $this->dirs[$spec][] = dirname($class);
-            return $this->dirs[$spec];
-        }
-        
-        // assume that it's a directory for a namespace or class,
-        // not a class file itself.
-        $this->dirs[$spec] = array();
-        
-        // go through each of the path prefixes for classes
-        foreach ($this->prefixes as $prefix => $paths) {
-            
-            // remove the trailing namespace separator
-            $prefix = rtrim($prefix, '\\');
-            
-            // get the length of the prefix
-            $len = strlen($prefix);
-            
-            // does the prefix match?
-            if (substr($spec, 0, $len) != $prefix) {
-                // no
-                continue;
-            }
-            
-            // strip the prefix from the spec ...
-            $tmp = ltrim($spec, '\\');
-            $tmp = str_replace('\\', DIRECTORY_SEPARATOR, $tmp) . DIRECTORY_SEPARATOR;
-            
-            // ... and go through each of the paths for the prefix
-            foreach ($paths as $path) {
-                
-                // add the remaining spec to the path
-                $dir = $path . DIRECTORY_SEPARATOR . $tmp;
-                
-                // does it exist?
-                if (is_dir($dir)) {
-                    // found it; retain in dir map
-                    $this->dirs[$spec][] = $dir;
-                }
-            }
-        }
-        
-        // done
-        return $this->dirs[$spec];
     }
     
     /**

@@ -180,40 +180,6 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         }
     }
     
-    public function testFindDir()
-    {
-        $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
-        $spec = 'Aura\Autoload';
-        $actual = $autoloader->findDir($spec);
-        $expect = array(__DIR__ . DIRECTORY_SEPARATOR);
-        $this->assertSame($expect, $actual);
-    }
-    
-    public function testFindDirContainingClass()
-    {
-        $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
-        $spec = 'Aura\Autoload\MockAutoloadClass';
-        $actual = $autoloader->findDir($spec);
-        $expect = array(__DIR__);
-        $this->assertSame($expect, $actual);
-        
-        // find again for coverage of the cached value
-        $actual = $autoloader->findDir($spec);
-        $this->assertSame($expect, $actual);
-    }
-    
-    public function testFindDirDoesNotExist()
-    {
-        $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
-        
-        $spec = 'Aura\Nonesuch';
-        $actual = $autoloader->findDir($spec);
-        $this->assertSame(array(), $actual);
-    }
-    
     public function testSetClasses()
     {
         $autoloader = new Loader;
