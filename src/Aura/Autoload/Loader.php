@@ -83,6 +83,8 @@ class Loader
      */
     protected $mode = self::MODE_NORMAL;
     
+    protected $tried_paths;
+    
     /**
      * 
      * Sets the autoloader operational mode.
@@ -298,7 +300,9 @@ class Loader
                 return;
             } else {
                 // yes, throw an exception
-                throw new Exception\NotFound($spec);
+                $message = $spec . PHP_EOL
+                         . implode(PHP_EOL, $this->tried_paths);
+                throw new Exception\NotFound($message);
             }
         }
         
@@ -321,7 +325,16 @@ class Loader
         $this->loaded[$spec] = $file;
     }
     
-    public function isDeclared($spec)
+    /**
+     * 
+     * Tells if a class or interface exists.
+     * 
+     * @param string $spec The class or interface.
+     * 
+     * @return bool
+     * 
+     */
+    protected function isDeclared($spec)
     {
         return class_exists($spec, false)
             || interface_exists($spec, false);
@@ -344,6 +357,8 @@ class Loader
             return $this->classes[$spec];
         }
         
+        $this->tried_paths = array();
+        
         // go through each of the path prefixes
         foreach ($this->paths as $prefix => $paths) {
             
@@ -360,7 +375,10 @@ class Loader
             $ctf = $this->classToFile($spec);
             
             // ... and go through each of the paths for the prefix
-            foreach ($paths as $path) {
+            foreach ($paths as $i => $path) {
+                
+                // track which paths we have tried
+                $this->tried_paths[] = "#{$i}: {$path}";
                 
                 // convert the remaining spec to a file name
                 $file = $path . DIRECTORY_SEPARATOR . $ctf;
@@ -373,26 +391,13 @@ class Loader
             }
         }
         
-        // fall back to the include-path
-        return $this->findInclude($spec);
-    }
-    
-    /**
-     * 
-     * Finds a class in the include-path.
-     * 
-     * @param string $spec The class or interface to find.
-     * 
-     * @return mixed The path to the file, or false if not found.
-     * 
-     */
-    protected function findInclude($spec)
-    {
         // fall back to the include path
         $file = $this->classToFile($spec);
         try {
             $obj = new \SplFileObject($file, 'r', true);
         } catch (\RuntimeException $e) {
+            $k = count($this->tried_paths);
+            $this->tried_paths[] = "#{$k}" . get_include_path();
             return false;
         }
         $path = $obj->getRealPath();

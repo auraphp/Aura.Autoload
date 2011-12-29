@@ -233,12 +233,12 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     
     public function testSetPaths()
     {
-        $class1 = 'Aura\Cli\MockAutoloadCliClass';
-        $class2 = 'Aura\Router\MockAutoloadRouterClass';
+        $class1 = 'Aura\Autoload\Foo\MockAutoloadCliClass';
+        $class2 = 'Aura\Autoload\Bar\MockAutoloadRouterClass';
         $autoloader = new Loader;
         $autoloader->setPaths(array(
-            'Aura\Cli\\', dirname(dirname(__DIR__)),
-            'Aura\Router\\', dirname(dirname(__DIR__))
+            'Aura\Autoload\Foo\\' => dirname(dirname(__DIR__)),
+            'Aura\Autoload\Bar\\' => dirname(dirname(__DIR__))
         ));
         $autoloader->load($class1);
         $autoloader->load($class2);
@@ -249,8 +249,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($class1, $actual);
         
         $expect = array(
-            $class1 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Cli/MockAutoloadCliClass.php',
-            $class2 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Router/MockAutoloadRouterClass.php',
+            $class1 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Foo/MockAutoloadCliClass.php',
+            $class2 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Bar/MockAutoloadRouterClass.php',
         );
         
         $actual = $autoloader->getLoaded();

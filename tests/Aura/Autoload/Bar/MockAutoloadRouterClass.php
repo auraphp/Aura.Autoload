@@ -1,3 +1,3 @@
 <?php
-namespace Aura\Router;
+namespace Aura\Autoload\Bar;
 class MockAutoloadRouterClass {}

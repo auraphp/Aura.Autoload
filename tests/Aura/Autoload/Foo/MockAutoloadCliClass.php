@@ -1,3 +1,3 @@
 <?php
-namespace Aura\Cli;
+namespace Aura\Autoload\Foo;
 class MockAutoloadCliClass {}
