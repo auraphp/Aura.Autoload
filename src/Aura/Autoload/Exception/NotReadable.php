@@ -15,4 +15,4 @@ namespace Aura\Autoload\Exception;
  * @package Aura.Autoload
  * 
  */
-class NotFound extends \Aura\Autoload\Exception {}
+class NotReadable extends \Aura\Autoload\Exception {}

@@ -78,7 +78,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         // missing in normal mode should throw exception
         $autoloader->setMode(Loader::MODE_NORMAL);
-        $this->setExpectedException('Aura\Autoload\Exception\NotFound');
+        $this->setExpectedException('Aura\Autoload\Exception\NotReadable');
         $autoloader->load($class);
     }
     
@@ -102,7 +102,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @expectedException \Aura\Autoload\Exception\NotFound
+     * @expectedException \Aura\Autoload\Exception\NotReadable
      */
     public function testLoadNotInIncludePath()
     {

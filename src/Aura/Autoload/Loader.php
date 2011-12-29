@@ -274,7 +274,7 @@ class Loader
      * 
      * @return void
      * 
-     * @throws Exception\NotFound when the file for the class or 
+     * @throws Exception\NotReadable when the file for the class or 
      * interface is not found.
      * 
      */
@@ -302,7 +302,7 @@ class Loader
                 // yes, throw an exception
                 $message = $spec . PHP_EOL
                          . implode(PHP_EOL, $this->tried_paths);
-                throw new Exception\NotFound($message);
+                throw new Exception\NotReadable($message);
             }
         }
         
