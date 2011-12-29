@@ -19,6 +19,35 @@ class Loader
 {
     /**
      * 
+     * Operational mode where no exceptions are thrown under error conditions.
+     *
+     * @const
+     * 
+     */
+    const MODE_SILENT = 0;
+    
+    /**
+     * 
+     * Operatinal mode where an exception is thrown when a class file is not
+     * found.
+     *
+     * @const
+     * 
+     */
+    const MODE_NORMAL = 1;
+    
+    /**
+     * 
+     * Operatinal mode where an exception is thrown when a class file is not
+     * found, or if after loading the file the class is still not declared.
+     *
+     * @const
+     * 
+     */
+    const MODE_DEBUG = 2;
+    
+    /**
+     * 
      * Classes and interfaces loaded by the autoloader; the key is the class
      * name and the value is the file name.
      * 
@@ -29,12 +58,12 @@ class Loader
     
     /**
      * 
-     * A map of class name prefixes to directory names.
+     * A map of class name prefixes to directory paths.
      * 
      * @var array
      * 
      */
-    protected $prefixes = array();
+    protected $paths = array();
     
     /**
      * 
@@ -47,14 +76,59 @@ class Loader
     
     /**
      * 
+     * The operational mode.
+     * 
+     * @var int
+     * 
+     */
+    protected $mode = self::MODE_NORMAL;
+    
+    /**
+     * 
+     * Sets the autoloader operational mode.
+     *
+     * @param int $mode Autoloader operational mode.
+     * 
+     */
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
+    }
+    
+    /**
+     * 
+     * Is the autoloader in debug mode?
+     *
+     * @param int $mode Autoloader operational mode.
+     * 
+     */
+    public function isDebug()
+    {
+        return $this->mode == self::MODE_DEBUG;
+    }
+    
+    /**
+     * 
+     * Is the autoloader in silent mode?
+     *
+     * @param int $mode Autoloader operational mode.
+     * 
+     */
+    public function isSilent()
+    {
+        return $this->mode == self::MODE_SILENT;
+    }
+    
+    /**
+     * 
      * Registers this autoloader with SPL.
      * 
      * @return void
      * 
      */
-    public function register()
+    public function register($prepend = false)
     {
-        spl_autoload_register(array($this, 'load'));
+        spl_autoload_register(array($this, 'load'), true, (bool) $prepend);
     }
     
     /**
@@ -73,52 +147,50 @@ class Loader
      * 
      * Adds a directory path for a class name prefix.
      * 
-     * @param string $name The class name prefix, e.g. 'Aura\Framework\\' or
+     * @param string $prefix The class name prefix, e.g. 'Aura\Framework\\' or
      * 'Zend_'.
      * 
-     * @param array|string $paths The absolute path leading to the classes for that
-     * prefix, e.g. `'/path/to/system/package/Aura.Framework-dev/src'`. Note
-     * that the classes must thereafter be in subdirectories of their own, 
-     * e.g. `'/Aura/Framework/'.
+     * @param array|string $paths The directory path leading to the classes 
+     * with that prefix, e.g. `'/path/to/system/package/Aura.Framework-dev/src'`.
+     * Note that the classes must thereafter be in subdirectories of their 
+     * own, e.g. `'/Aura/Framework/'.
      * 
      * @return void
      * 
      */
-    public function addPrefix($name, $paths)
+    public function add($prefix, $paths)
     {
         foreach ((array) $paths as $path) {
-            $this->prefixes[$name][] = rtrim($path, DIRECTORY_SEPARATOR);
+            $this->paths[$prefix][] = rtrim($path, DIRECTORY_SEPARATOR);
         }
     }
     
     /**
-     * Add an array of prefixed name spaces
      * 
-     * An array of associative name and paths.
+     * Sets all class name prefixes and their paths. This overwrites the
+     * existing mappings.
      * 
-     * paths can also be an array or a string
+     * Paths can a string or an array. For example:
      * 
-     * Eg : 
+     *      $loader->setPaths(array(
+     *          'Zend_'=> '/path/to/zend/library',
+     *          'Aura\\' => array(
+     *              '/path/to/project/Aura.Router/src/',
+     *              '/path/to/project/Aura.Di/src/'
+     *          ),
+     *          'Vendor\\' => array(
+     *              '/path/to/project/Vendor.Package/src/',
+     *          ),
+     *          'Symfony\Component' => 'path/to/Symfony/Component',
+     *      ));
      * 
-     * $loader->addPrefixes(array(
-     *      'Zend_'=> '/path/to/zend/library',
-     *      'Aura' => array(
-     *          '/path/to/project/Aura.Router/src/',
-     *          '/path/to/project/Aura.Di/src/'
-     *      ),
-     *      'Vendor' => array(
-     *          '/path/to/project/Vendor.Package/src/',
-     *      ),
-     *      'Symfony/Component' => 'path/to/Symfony/Component',
-     *  ));
-     * 
-     * @param array $prefixes
+     * @param array $paths An associative array of class names and paths.
      * 
      */
-    public function addPrefixes(array $prefixes = array())
+    public function setPaths(array $paths = array())
     {
-        foreach ($prefixes as $name => $paths ) {
-            $this->addPrefix($name, $paths);
+        foreach ($paths as $key => $val) {
+            $this->add($key, $val);
         }
     }
     
@@ -129,30 +201,31 @@ class Loader
      * @return array
      * 
      */
-    public function getPrefixes()
+    public function getPaths()
     {
-        return $this->prefixes;
+        return $this->paths;
     }
     
     /**
      * 
-     * Sets the file path for an exact class name.
+     * Sets the exact file path for an exact class name.
      * 
-     * @param string $name The exact class name.
+     * @param string $class The exact class name.
      * 
      * @param string $path The file path to that class.
      * 
      * @return void
      * 
      */
-    public function setClass($name, $path)
+    public function setClass($class, $path)
     {
-        $this->classes[$name] = $path;
+        $this->classes[$class] = $path;
     }
     
     /**
      * 
-     * Sets all file paths for all class names.
+     * Sets all file paths for all class names; this overwrites all previous
+     * exact mappings.
      * 
      * @param array $classes An array of class-to-file mappings where the key 
      * is the class name and the value is the file path.
@@ -195,7 +268,7 @@ class Loader
      * Loads a class or interface using the class name prefix and path,
      * falling back to the include-path if not found.
      * 
-     * @param string $class The class or interface to load.
+     * @param string $spec The class or interface to load.
      * 
      * @return void
      * 
@@ -203,51 +276,88 @@ class Loader
      * interface is not found.
      * 
      */
-    public function load($class)
+    public function load($spec)
     {
-        if (class_exists($class, false)) {
-            throw new Exception\AlreadyLoaded($class);
+        // is the class already loaded?
+        if ($this->isDeclared($spec)) {
+            if ($this->isDebug()) {
+                // yes, throw an exception
+                throw new Exception\AlreadyLoaded($spec);
+            } else {
+                // no, just return
+                return;
+            }
         }
         
-        $file = $this->find($class);
+        // find the class file
+        $file = $this->find($spec);
         if (! $file) {
-            throw new Exception\NotFound($class);
+            // did not find it.  do we care?
+            if ($this->isSilent()) {
+                // no, return without notice
+                return;
+            } else {
+                // yes, throw an exception
+                throw new Exception\NotFound($spec);
+            }
         }
+        
+        // load the file
         require $file;
-        $this->loaded[$class] = $file;
+        
+        // is the class declared now?
+        if (! $this->isDeclared($spec)) {
+            // no. do we care?
+            if ($this->isDebug()) {
+                // yes, throw an exception
+                throw new Exception\NotDeclared($spec);
+            } else {
+                // no, return without notice
+                return;
+            }
+        }
+        
+        // done!
+        $this->loaded[$spec] = $file;
+    }
+    
+    public function isDeclared($spec)
+    {
+        return class_exists($spec, false)
+            || interface_exists($spec, false);
     }
     
     /**
      * 
-     * Finds the path to a class or interface using the prefixes and 
+     * Finds the path to a class or interface using the class prefix paths and 
      * include-path.
      * 
-     * @param string $class The class or interface to find.
+     * @param string $spec The class or interface to find.
      * 
      * @return The absolute path to the class or interface.
      * 
      */
-    public function find($class)
+    public function find($spec)
     {
         // does the class exist in the explicit class map?
-        if (isset($this->classes[$class])) {
-            return $this->classes[$class];
+        if (isset($this->classes[$spec])) {
+            return $this->classes[$spec];
         }
         
         // go through each of the path prefixes
-        foreach ($this->prefixes as $prefix => $paths) {
+        foreach ($this->paths as $prefix => $paths) {
             
             // get the length of the prefix
             $len = strlen($prefix);
             
             // does the prefix match?
-            if (substr($class, 0, $len) != $prefix) {
+            if (substr($spec, 0, $len) != $prefix) {
                 // no
                 continue;
             }
             
             // .. convert class name to file name ...
-            $ctf = $this->classToFile($class);
+            $ctf = $this->classToFile($spec);
             
             // ... and go through each of the paths for the prefix
             foreach ($paths as $path) {
@@ -258,22 +368,35 @@ class Loader
                 // does it exist?
                 if (file_exists($file)) {
                     // found it; retain in class map
-                    $this->classes[$class] = $file;
                     return $file;
                 }
             }
         }
         
+        // fall back to the include-path
+        return $this->findInclude($spec);
+    }
+    
+    /**
+     * 
+     * Finds a class in the include-path.
+     * 
+     * @param string $spec The class or interface to find.
+     * 
+     * @return mixed The path to the file, or false if not found.
+     * 
+     */
+    protected function findInclude($spec)
+    {
         // fall back to the include path
-        $name = $this->classToFile($class);
+        $file = $this->classToFile($spec);
         try {
-            $obj = new \SplFileObject($name, 'r', true);
+            $obj = new \SplFileObject($file, 'r', true);
         } catch (\RuntimeException $e) {
             return false;
         }
-        $file = $obj->getRealPath();
-        $this->classes[$class] = $file;
-        return $file;
+        $path = $obj->getRealPath();
+        return $path;
     }
     
     /**

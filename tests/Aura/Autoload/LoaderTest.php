@@ -27,7 +27,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'Aura\Autoload\MockAutoloadClass';
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
+        $autoloader->add('Aura\Autoload\\', dirname(dirname(__DIR__)));
         $autoloader->load($class);
         
         $classes = get_declared_classes();
@@ -48,21 +48,57 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'Aura\Autoload\MockAutoloadAlready';
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
+        
+        // load it once under normal mode
+        $autoloader->add('Aura\Autoload\\', dirname(dirname(__DIR__)));
+        $autoloader->load($class);
+        $loaded = $autoloader->getLoaded();
+        $this->assertTrue(isset($loaded[$class]));
+        
+        // load it again under normal mode, should be no error
         $autoloader->load($class);
         
+        // load it again under debug mode, we should see a failure
+        $autoloader->setMode(Loader::MODE_DEBUG);
         $this->setExpectedException('Aura\Autoload\Exception\AlreadyLoaded');
         $autoloader->load($class);
     }
     
-    /**
-     * @expectedException \Aura\Autoload\Exception\NotFound
-     */
     public function testLoadMissing()
     {
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
-        $autoloader->load('Aura\Autoload\NoSuchClass');
+        $autoloader->add('Aura\Autoload\\', dirname(dirname(__DIR__)));
+        $class = 'Aura\Autoload\NoSuchClass';
+        
+        // missing in silent mode should be nothing
+        $autoloader->setMode(Loader::MODE_SILENT);
+        $autoloader->load($class);
+        $loaded = $autoloader->getLoaded();
+        $this->assertFalse(isset($loaded[$class]));
+        
+        // missing in normal mode should throw exception
+        $autoloader->setMode(Loader::MODE_NORMAL);
+        $this->setExpectedException('Aura\Autoload\Exception\NotFound');
+        $autoloader->load($class);
+    }
+    
+    public function testLoadUndeclared()
+    {
+        $autoloader = new Loader;
+        $autoloader->add('Aura\Autoload\\', dirname(dirname(__DIR__)));
+        
+        // undeclared in normal mode should be nothing
+        $class = 'Aura\Autoload\MockAutoloadUndeclared1';
+        $autoloader->setMode(Loader::MODE_NORMAL);
+        $autoloader->load($class);
+        $loaded = $autoloader->getLoaded();
+        $this->assertFalse(isset($loaded[$class]));
+        
+        // undeclared in debug mode should throw exception
+        $class = 'Aura\Autoload\MockAutoloadUndeclared2';
+        $autoloader->setMode(Loader::MODE_DEBUG);
+        $this->setExpectedException('Aura\Autoload\Exception\NotDeclared');
+        $autoloader->load($class);
     }
     
     /**
@@ -96,7 +132,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         // set an autoloader with paths
         $autoloader = new Loader;
-        $autoloader->addPrefix('Aura\Autoload\\', dirname(dirname(__DIR__)));
+        $autoloader->add('Aura\Autoload\\', dirname(dirname(__DIR__)));
         
         // autoload it
         $expect = 'ClassWithoutNamespace';
@@ -113,11 +149,11 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         ini_set('include_path', $old_include_path);
     }
     
-    public function testAddPrefixAndGetPrefixes()
+    public function testAddPrefixAndGetPaths()
     {
         $autoloader = new Loader;
-        $autoloader->addPrefix('Foo_', '/path/to/Foo');
-        $actual = $autoloader->getPrefixes();
+        $autoloader->add('Foo_', '/path/to/Foo');
+        $actual = $autoloader->getPaths();
         $expect = array('Foo_' => array('/path/to/Foo'));
         $this->assertSame($expect, $actual);
     }
@@ -195,12 +231,12 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect, $actual);
     }
     
-    public function testAddPrefixes()
+    public function testSetPaths()
     {
         $class1 = 'Aura\Cli\MockAutoloadCliClass';
         $class2 = 'Aura\Router\MockAutoloadRouterClass';
         $autoloader = new Loader;
-        $autoloader->addPrefixes(array(
+        $autoloader->setPaths(array(
             'Aura\Cli\\', dirname(dirname(__DIR__)),
             'Aura\Router\\', dirname(dirname(__DIR__))
         ));
