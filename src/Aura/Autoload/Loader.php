@@ -384,7 +384,7 @@ class Loader
                 $file = $path . DIRECTORY_SEPARATOR . $ctf;
                 
                 // does it exist?
-                if (file_exists($file)) {
+                if (is_readable($file)) {
                     // found it; retain in class map
                     return $file;
                 }
