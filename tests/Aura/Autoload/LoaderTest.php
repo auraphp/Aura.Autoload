@@ -34,9 +34,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $actual = array_pop($classes);
         $this->assertSame($class, $actual);
         
-        $expect = array(
+        $expect = [
             $class => __DIR__ . DIRECTORY_SEPARATOR . 'MockAutoloadClass.php',
-        );
+        ];
         
         $actual = $autoloader->getLoaded();
         $this->assertSame($expect, $actual);
@@ -154,7 +154,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $autoloader = new Loader;
         $autoloader->add('Foo_', '/path/to/Foo');
         $actual = $autoloader->getPaths();
-        $expect = array('Foo_' => array('/path/to/Foo'));
+        $expect = ['Foo_' => ['/path/to/Foo']];
         $this->assertSame($expect, $actual);
     }
     
@@ -163,7 +163,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $autoloader = new Loader;
         $autoloader->setClass('FooBar', '/path/to/FooBar.php');
         $actual = $autoloader->getClasses();
-        $expect = array('FooBar' => '/path/to/FooBar.php');
+        $expect = ['FooBar' => '/path/to/FooBar.php'];
         $this->assertSame($expect, $actual);
     }
     
@@ -202,14 +202,14 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $autoloader = new Loader;
         
-        $list = array(
+        $list = [
             'Foo'                       => 'Foo.php',
             'Foo_Bar'                   => 'Foo/Bar.php',
             'foo\\Bar'                  => 'foo/Bar.php',
             'foo_bar\\Baz'              => 'foo_bar/Baz.php',
             'foo_bar\\Baz_Dib'          => 'foo_bar/Baz/Dib.php',
             'foo_bar\\baz_dib\\Zim_Gir' => 'foo_bar/baz_dib/Zim/Gir.php',
-        );
+        ];
         
         foreach ($list as $class => $expect) {
             $actual = $autoloader->classToFile($class);
@@ -221,10 +221,10 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testSetClasses()
     {
         $autoloader = new Loader;
-        $expect = array(
+        $expect = [
             'FooBar' => '/path/to/FooBar.php',
             'BazDib' => '/path/to/BazDib.php',
-        );
+        ];
         
         $autoloader->setClasses($expect);
         $actual = $autoloader->getClasses();
@@ -236,10 +236,10 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $class1 = 'Aura\Autoload\Foo\MockAutoloadCliClass';
         $class2 = 'Aura\Autoload\Bar\MockAutoloadRouterClass';
         $autoloader = new Loader;
-        $autoloader->setPaths(array(
+        $autoloader->setPaths([
             'Aura\Autoload\Foo\\' => dirname(dirname(__DIR__)),
             'Aura\Autoload\Bar\\' => dirname(dirname(__DIR__))
-        ));
+        ]);
         $autoloader->load($class1);
         $autoloader->load($class2);
         $classes = get_declared_classes();
@@ -248,10 +248,10 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $actual = array_pop($classes);
         $this->assertSame($class1, $actual);
         
-        $expect = array(
+        $expect = [
             $class1 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Foo/MockAutoloadCliClass.php',
             $class2 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Bar/MockAutoloadRouterClass.php',
-        );
+        ];
         
         $actual = $autoloader->getLoaded();
         $this->assertSame($expect, $actual);

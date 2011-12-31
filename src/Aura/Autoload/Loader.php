@@ -12,7 +12,8 @@ namespace Aura\Autoload;
 
 /**
  * 
- * An SPL autoloader adhering to [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md).
+ * An SPL autoloader adhering to [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
+ * and <https://wiki.php.net/rfc/splclassloader>.
  * 
  */
 class Loader
@@ -54,7 +55,7 @@ class Loader
      * @var array
      * 
      */
-    protected $loaded = array();
+    protected $loaded = [];
     
     /**
      * 
@@ -63,7 +64,7 @@ class Loader
      * @var array
      * 
      */
-    protected $paths = array();
+    protected $paths = [];
     
     /**
      * 
@@ -72,7 +73,7 @@ class Loader
      * @var array
      * 
      */
-    protected $classes = array();
+    protected $classes = [];
     
     /**
      * 
@@ -83,7 +84,14 @@ class Loader
      */
     protected $mode = self::MODE_NORMAL;
     
-    protected $tried_paths;
+    /**
+     * 
+     * A log of paths that have been tried during load(), for debug use.
+     * 
+     * @var array
+     * 
+     */
+    protected $tried_paths = [];
     
     /**
      * 
@@ -130,7 +138,7 @@ class Loader
      */
     public function register($prepend = false)
     {
-        spl_autoload_register(array($this, 'load'), true, (bool) $prepend);
+        spl_autoload_register([$this, 'load'], true, (bool) $prepend);
     }
     
     /**
@@ -142,7 +150,7 @@ class Loader
      */
     public function unregister()
     {
-        spl_autoload_unregister(array($this, 'load'));
+        spl_autoload_unregister([$this, 'load']);
     }
     
     /**
@@ -174,22 +182,22 @@ class Loader
      * 
      * Paths can a string or an array. For example:
      * 
-     *      $loader->setPaths(array(
+     *      $loader->setPaths([
      *          'Zend_'=> '/path/to/zend/library',
-     *          'Aura\\' => array(
+     *          'Aura\\' => [
      *              '/path/to/project/Aura.Router/src/',
      *              '/path/to/project/Aura.Di/src/'
-     *          ),
-     *          'Vendor\\' => array(
+     *          ],
+     *          'Vendor\\' => [
      *              '/path/to/project/Vendor.Package/src/',
-     *          ),
+     *          ],
      *          'Symfony\Component' => 'path/to/Symfony/Component',
-     *      ));
+     *      ]);
      * 
      * @param array $paths An associative array of class names and paths.
      * 
      */
-    public function setPaths(array $paths = array())
+    public function setPaths(array $paths = [])
     {
         foreach ($paths as $key => $val) {
             $this->add($key, $val);
@@ -357,7 +365,7 @@ class Loader
             return $this->classes[$spec];
         }
         
-        $this->tried_paths = array();
+        $this->tried_paths = [];
         
         // go through each of the path prefixes
         foreach ($this->paths as $prefix => $paths) {
