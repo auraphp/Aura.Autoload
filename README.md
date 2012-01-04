@@ -1,7 +1,7 @@
 Aura Autoload
 =============
 
-The Aura Autoload package provides a [PSR-0](http://groups.google.com/group/php-standards/web/psr-0-final-proposal) compliant SPL autoloader implementation for PHP. It also matches the interface proposed at <https://wiki.php.net/rfc/splclassloader>.
+The Aura Autoload package provides a [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md) compliant SPL autoloader implementation for PHP. It also matches the interface proposed at <https://wiki.php.net/rfc/splclassloader>.
 
 
 Include-Path Usage

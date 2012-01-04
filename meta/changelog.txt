@@ -1,0 +1,23 @@
+commit f4f3ed881e1993dc1656771210f4197161f0d804
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Jan 3 21:45:42 2012 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Jan 3 21:45:42 2012 -0600
+
+    modify description
+
+commit 11d18ba9b08cd5e3a5f8754dcd65e0058e9cd124
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Jan 3 21:45:26 2012 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Jan 3 21:45:26 2012 -0600
+
+    update comments
+
+commit a8adf8208e7204e4508ae9bed9cb79773064bff8
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Mon Jan 2 23:57:17 2012 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Mon Jan 2 23:57:17 2012 +0530
+
+    Changing version to 5.4 for composer.json
