@@ -1,3 +1,11 @@
+commit 4bb9a994126748c3336fdba9e5f92ec6730ee3f1
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Wed Jan 4 16:40:27 2012 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Wed Jan 4 16:40:27 2012 -0600
+
+    add metadata, update README and composer
+
 commit f4f3ed881e1993dc1656771210f4197161f0d804
 Author:     Paul M. Jones <pmjones88@gmail.com>
 AuthorDate: Tue Jan 3 21:45:42 2012 -0600
