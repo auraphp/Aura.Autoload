@@ -1,31 +1,374 @@
-commit 4bb9a994126748c3336fdba9e5f92ec6730ee3f1
+commit a08da4c93979453d24372cdd2811cd92ddec9191
 Author:     Paul M. Jones <pmjones88@gmail.com>
-AuthorDate: Wed Jan 4 16:40:27 2012 -0600
+AuthorDate: Fri Dec 30 19:07:02 2011 -0600
 Commit:     Paul M. Jones <pmjones88@gmail.com>
-CommitDate: Wed Jan 4 16:40:27 2012 -0600
+CommitDate: Fri Dec 30 19:07:02 2011 -0600
 
-    add metadata, update README and composer
+    re-add README
 
-commit f4f3ed881e1993dc1656771210f4197161f0d804
+commit 248ae5cc527220c76176b3a84ca7529ef18b2745
 Author:     Paul M. Jones <pmjones88@gmail.com>
-AuthorDate: Tue Jan 3 21:45:42 2012 -0600
+AuthorDate: Fri Dec 30 19:02:30 2011 -0600
 Commit:     Paul M. Jones <pmjones88@gmail.com>
-CommitDate: Tue Jan 3 21:45:42 2012 -0600
+CommitDate: Fri Dec 30 19:02:30 2011 -0600
 
-    modify description
+    convert to php 5.4
 
-commit 11d18ba9b08cd5e3a5f8754dcd65e0058e9cd124
+commit ea57a7ff75ebcbc7ef6a31ccfd7fb4778fde9c8d
 Author:     Paul M. Jones <pmjones88@gmail.com>
-AuthorDate: Tue Jan 3 21:45:26 2012 -0600
+AuthorDate: Thu Dec 29 18:11:34 2011 -0600
 Commit:     Paul M. Jones <pmjones88@gmail.com>
-CommitDate: Tue Jan 3 21:45:26 2012 -0600
+CommitDate: Thu Dec 29 18:11:34 2011 -0600
 
-    update comments
+    fix src.php
 
-commit a8adf8208e7204e4508ae9bed9cb79773064bff8
+commit 92810fe0a031cef93fb337177c1d14b176489622
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu Dec 29 17:57:26 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu Dec 29 17:57:26 2011 -0600
+
+    in line with change from file_exists() to is_readable(), change from NotFound to NotReadable
+
+commit fc94c1a0f7eaddd9bd78bf67f4440fd0a9ada3b8
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu Dec 29 17:55:28 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu Dec 29 17:55:28 2011 -0600
+
+    use is_readable() instead of file_exists(), per note from HariKT
+
+commit 6836924adc92189c3f5a92a5f82cc3f9aab64cb2
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu Dec 29 17:15:07 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu Dec 29 17:15:07 2011 -0600
+
+    update src.php
+
+commit e4c60e0d860c61a81b17ab8a0b34fc5232a8a0ac
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu Dec 29 17:13:57 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu Dec 29 17:13:57 2011 -0600
+
+    clean up testing situation, add path tracking for debug info
+
+commit 2ba0799dfd56a78aa762f53cfe8623aede386cf6
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu Dec 29 16:54:01 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu Dec 29 16:54:01 2011 -0600
+
+    add src and test files from last commit
+
+commit 6d9d5764342414650f96247372bbc3dc2de30f04
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu Dec 29 16:53:33 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu Dec 29 16:53:33 2011 -0600
+
+    BREAK: change autoloader to match <https://wiki.php.net/rfc/splclassloader>
+
+commit 1b182dbc278d1ccf7f014a566a320aa1ad6673a1
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu Dec 29 10:36:01 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu Dec 29 10:36:01 2011 -0600
+
+    update src.php
+
+commit e634cf51bb9dc9b35d233a21f4e0730fc81ac975
+Merge: 956f003 ea41b03
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Dec 27 16:00:39 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Dec 27 16:00:39 2011 -0600
+
+    merge changes
+
+commit 956f0036c6554681af36faba21bd19e48af3c88e
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Dec 27 15:19:39 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Dec 27 15:19:39 2011 -0600
+
+    streamline test bootstrap
+
+commit a912dfa68c08b8922e39678f8d372dd6d17c2ece
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Dec 27 15:11:42 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Dec 27 15:11:42 2011 -0600
+
+    remove the findDir() method; was needed only for page hierarchy discovery, which is now handled otherwise.
+
+commit ea41b03806f071535c347c0f3d5511cbc7a25f84
 Author:     Hari K T <kthari85@gmail.com>
-AuthorDate: Mon Jan 2 23:57:17 2012 +0530
+AuthorDate: Tue Dec 20 21:54:35 2011 +0530
 Commit:     Hari K T <kthari85@gmail.com>
-CommitDate: Mon Jan 2 23:57:17 2012 +0530
+CommitDate: Tue Dec 20 21:54:35 2011 +0530
 
-    Changing version to 5.4 for composer.json
+    addPrefix now can handle arrays
+
+commit 81ec1f87e3b0ab4e54f54ec8d6825c508713f4ca
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Thu Dec 15 00:18:29 2011 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Thu Dec 15 00:18:29 2011 +0530
+
+    addPrefixes() method to pass namespaces as an array
+
+commit fe332eee30af476e2ecc3da7a62ced344a6f06c9
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Dec 12 11:38:00 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Dec 12 11:38:00 2011 -0600
+
+    use subdirs
+
+commit f7241a27dc90f41c3f58bee5471cf2a55cb37b40
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Dec 12 11:21:54 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Dec 12 11:21:54 2011 -0600
+
+    Major changes to make the package fully independent, and to more fully comply with PSR-0 expectations.
+
+    - Added Loader::unregister().
+
+    - Loader no longer strips the prefix from the class in find() and findDir(). This means the end of packages structured as `src/Class.php`. Instead, you need to have `src/Vendor/Package/Class.php`, which is kind of annoying, but it makes things more compliant with PSR-0 expectations.
+
+    - Added src and tests subdirectories for PSR-0 compliance.
+
+    - Package tests are now runnable with an independent PHPUnit installation. Change to the tests directory and issue `phpunit` to run them.
+
+commit 6018663cb71ef42203be70736d3077a8d652754f
+Merge: f4f12ea cfebfd1
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Fri Oct 21 15:40:40 2011 -0700
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Fri Oct 21 15:40:40 2011 -0700
+
+    Merge branch 'master' of https://github.com/auraphp/Aura.Autoload
+
+commit f4f12eadb205268ac17dfaae234ef5ddc26d43e8
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Fri Oct 21 15:40:18 2011 -0700
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Fri Oct 21 15:40:18 2011 -0700
+
+    update tests for phpunit 3.5
+
+commit cfebfd123a23f789ac013efd7b137d6217fa132f
+Merge: ea3ce97 24d061c
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Sun Oct 16 00:26:36 2011 -0700
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Sun Oct 16 00:26:36 2011 -0700
+
+    Merge pull request #2 from harikt/master
+
+    I am merging the composer.json file. So I can add to packagist soon.
+    Thanks
+
+commit 24d061cfeb2a0c1020dca94ac10d593ae13b2a4e
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Sun Oct 16 12:51:22 2011 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Sun Oct 16 12:51:22 2011 +0530
+
+    Typo missing the http part in composer.json
+
+commit 3dfde5899124a2311592ea93039e167d03756025
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Sun Oct 16 12:47:23 2011 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Sun Oct 16 12:47:23 2011 +0530
+
+    Adding a composer.json to submit to packagist
+
+commit 6737a6739a126d9e511dd919dcdc01c8922e97ad
+Merge: 1c15f7c ea3ce97
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Sat Oct 15 15:16:38 2011 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Sat Oct 15 15:16:38 2011 +0530
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit ea3ce97b58d715abee0a0a4835d3c05eb88a98d7
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Fri Oct 7 10:00:20 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Fri Oct 7 10:00:20 2011 -0500
+
+    updated tests
+
+commit 4dd0ec6ca00bb864ed3a4bfdf629fc8ea9100a9f
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Oct 3 10:11:47 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Oct 3 10:11:47 2011 -0500
+
+    config now adds to autoloader
+
+commit aaa45c1136d087d05baf945a4d4eb69684ff1c1c
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Oct 3 10:11:13 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Oct 3 10:11:13 2011 -0500
+
+    update tests to match new method names
+
+commit cb58aa9d7a2f184589ef01f1df9d5e87888a4126
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Oct 3 10:10:43 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Oct 3 10:10:43 2011 -0500
+
+    Minor additions and changes.
+
+    - [CHG] Rename method addClass() to setClass()
+
+    - [ADD] Method setClasses()
+
+    - [CHG] Minor optimization in method find() to not run class-to-file so much.
+
+commit 1c15f7c382451e9dfa787665dd367ee00ce7726c
+Merge: e94d4a5 d0a8435
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Wed Jun 15 21:36:20 2011 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Wed Jun 15 21:36:20 2011 +0530
+
+    Merge upstream/master with namepspace changes
+
+commit d0a843589dceccd9a0edb3735eb765614e712337
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Jun 13 21:11:45 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Jun 13 21:11:45 2011 -0500
+
+    findDir() should always be an array
+
+commit 91fc3a9dfcac1e9275f121aca85f2a19e739f111
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Jun 13 20:22:41 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Jun 13 20:22:41 2011 -0500
+
+    change lowercase vendor.package to uppercase Vendor.Package
+
+commit d5ec4621cfd7feeb36949cec6702462b6f062955
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Jun 13 20:08:39 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Jun 13 20:08:39 2011 -0500
+
+    update comment
+
+commit fe85b4afc022cc8bf01b0d7b1f6ced67b9e57a10
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Jun 13 17:21:04 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Jun 13 17:21:04 2011 -0500
+
+    convert all vendor and package namespace names to use initial upper-case letter
+
+commit 70f992e05dcabfc00560b7b96c62c679f48a38b3
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Mon Jun 13 14:48:34 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Mon Jun 13 14:48:34 2011 -0500
+
+    remove getDirs() and getSubdirs(), replace with findDir()
+
+commit e94d4a57fe0ab09e7eba3a310a1d780693dbb2cd
+Merge: f846b59 fcfb24b
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Mon Jun 13 22:07:28 2011 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Mon Jun 13 22:07:28 2011 +0530
+
+    resolving merge conflicts
+
+commit f846b59a34b284ad4c0b67a805cc55a3aed6c0ba
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Mon Jun 13 20:47:08 2011 +0530
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Mon Jun 13 20:47:08 2011 +0530
+
+    captials for the namespace
+
+commit fcfb24b2a77e374e12f25ac5f1d7a3be6038308d
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Thu May 19 14:32:47 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Thu May 19 14:32:47 2011 -0500
+
+    add getDirs() to get containing directories for classes; this is to support same-directory support dirs as suggest by harikt. increase coverage to 100%.
+
+commit 81dcb89e19427eb603ed41e28d14e44053c005bb
+Author:     Hari K T <kthari85@gmail.com>
+AuthorDate: Thu May 12 11:25:59 2011 -0700
+Commit:     Hari K T <kthari85@gmail.com>
+CommitDate: Thu May 12 11:25:59 2011 -0700
+
+    Moving documentation to gh-pages branch
+
+commit 5038dbd93f27adccdf2c5ddc9d99d10fa8102b21
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Apr 26 08:39:29 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Apr 26 08:39:29 2011 -0500
+
+    add method getSubdirs() to support finding the subdirectories in which a class and its parents live
+
+commit fb51d0ee98a3a810e4c5a9710420b71baf5edbca
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Sat Mar 12 09:04:24 2011 -0500
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Sat Mar 12 09:04:24 2011 -0500
+
+    Break: rename addPath() to addPrefix().  Add methods addClass() and getClasses() to allow for specific class maps (not just prefix maps).
+
+commit dd68506d984c5d1c06fd68c39b7c3ff12939b505
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Mar 1 20:21:48 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Mar 1 20:21:48 2011 -0600
+
+    typo fix
+
+commit d08114de2a81cb135146afe1d833bceb09b6ea5a
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Mar 1 18:58:22 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Mar 1 18:58:22 2011 -0600
+
+    updated readme
+
+commit 79e9685adcce1a82431bbaa5fa0378aab28f5388
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Mar 1 18:57:35 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Mar 1 18:57:35 2011 -0600
+
+    udpated readme
+
+commit 17fd5dff902bef0c10f0d3a4b6c5c30449918111
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Mar 1 18:56:46 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Mar 1 18:56:46 2011 -0600
+
+    udpated readme
+
+commit aee4de71ba95258c00f3d2fec38875271f3292f4
+Author:     Paul M. Jones <pmjones88@gmail.com>
+AuthorDate: Tue Mar 1 18:55:35 2011 -0600
+Commit:     Paul M. Jones <pmjones88@gmail.com>
+CommitDate: Tue Mar 1 18:55:35 2011 -0600
+
+    initial commit

@@ -1,0 +1,5 @@
+The Aura Autoload package provides a PSR-0 compliant SPL autoloader
+implementation for PHP. It also matches the proposed SplClassLoader interface.
+
+[PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+[SplClassLoader]: https://wiki.php.net/rfc/splclassloader
