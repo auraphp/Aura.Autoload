@@ -143,7 +143,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         // delete the file and directory
         unlink($file);
-        rmdir($dir);
+        rmdir($dir); // tmp/tests
+        rmdir(dirname($dir)); // tmp
         
         // reset to old include path
         ini_set('include_path', $old_include_path);
@@ -195,7 +196,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         // delete the file and directory
         unlink($file);
-        rmdir($dir);
+        rmdir($dir); // /tmp/tests
+        rmdir(dirname($dir)); // tmp
     }
     
     public function testClassToFile()
