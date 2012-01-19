@@ -12,7 +12,7 @@
     ],
     "homepage": "http://auraphp.github.com",
     "version": "1.0.0-dev",
-    "license": "http://www.opensource.org/licenses/bsd-license.php",
+    "license": "BSD",
     "authors": [
         {
             "name": "Aura Contributors",
