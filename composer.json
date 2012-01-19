@@ -18,16 +18,6 @@
             "name": "Aura Contributors",
             "homepage": "https://github.com/auraphp/Aura.Autoload/contributors"
         },
-        {
-            "name": "Paul M. Jones",
-            "email": "pmjones88@gmail.com",
-            "homepage": "http://paul-m-jones.com"
-        },
-        {
-            "name": "Hari KT",
-            "email": "kthari85@gmail.com",
-            "homepage": "http://harikt.com"
-        }
     ],
     "require": {
         "php": ">=5.4.0"
