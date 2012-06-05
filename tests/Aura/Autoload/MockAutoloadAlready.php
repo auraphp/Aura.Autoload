@@ -1,5 +1,5 @@
 <?php
 namespace Aura\Autoload;
-class MockAutoloadAlready extends MockAutoloadClass {
-    
+class MockAutoloadAlready extends MockAutoloadClass
+{
 }
