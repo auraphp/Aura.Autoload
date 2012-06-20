@@ -337,7 +337,7 @@ class Loader
     
     /**
      * 
-     * Tells if a class or interface exists.
+     * Tells if a class, interface or trait exists.
      * 
      * @param string $spec The class or interface.
      * 
@@ -347,7 +347,8 @@ class Loader
     protected function isDeclared($spec)
     {
         return class_exists($spec, false)
-            || interface_exists($spec, false);
+            || interface_exists($spec, false)
+            || trait_exists($spec, false);
     }
     
     /**
