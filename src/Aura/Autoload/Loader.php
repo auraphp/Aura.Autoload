@@ -3,6 +3,8 @@
  * 
  * This file is part of the Aura project for PHP.
  * 
+ * @package Aura.Autoload
+ * 
  * @license http://opensource.org/licenses/bsd-license.php BSD
  * 
  */
@@ -12,8 +14,6 @@ namespace Aura\Autoload;
  * 
  * An SPL autoloader adhering to [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
  * and <https://wiki.php.net/rfc/splclassloader>.
- * 
- * @package Aura.Autoload
  * 
  */
 class Loader
