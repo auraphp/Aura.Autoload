@@ -14,5 +14,7 @@ namespace Aura\Autoload\Exception;
  * 
  * Indicates a class has already been loaded.
  * 
+ * @package Aura.Autoload
+ * 
  */
 class AlreadyLoaded extends \Aura\Autoload\Exception {}

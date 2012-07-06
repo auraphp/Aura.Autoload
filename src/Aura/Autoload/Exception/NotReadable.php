@@ -14,5 +14,7 @@ namespace Aura\Autoload\Exception;
  * 
  * Indicates the Loader failed to find a class file.
  * 
+ * @package Aura.Autoload
+ * 
  */
 class NotReadable extends \Aura\Autoload\Exception {}
