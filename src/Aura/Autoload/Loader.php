@@ -108,8 +108,8 @@ class Loader
     /**
      * 
      * Is the autoloader in debug mode?
-     *
-     * @param int $mode Autoloader operational mode.
+     * 
+     * @return bool
      * 
      */
     public function isDebug()
@@ -121,7 +121,7 @@ class Loader
      * 
      * Is the autoloader in silent mode?
      *
-     * @param int $mode Autoloader operational mode.
+     * @return bool
      * 
      */
     public function isSilent()
