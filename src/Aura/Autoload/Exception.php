@@ -17,4 +17,7 @@ namespace Aura\Autoload;
  * @package Aura.Autoload
  * 
  */
-class Exception extends \Exception {}
+class Exception extends \Exception
+{
+}
+ 

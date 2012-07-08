@@ -10,6 +10,7 @@
  */
 namespace Aura\Autoload\Exception;
 
+use Aura\Autoload\Exception;
 /**
  * 
  * Indicates a class has already been loaded.
@@ -17,4 +18,7 @@ namespace Aura\Autoload\Exception;
  * @package Aura.Autoload
  * 
  */
-class AlreadyLoaded extends \Aura\Autoload\Exception {}
+class AlreadyLoaded extends Exception
+{
+}
+ 
