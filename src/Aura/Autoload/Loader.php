@@ -28,7 +28,7 @@ class Loader
      * 
      */
     const MODE_SILENT = 0;
-    
+
     /**
      * 
      * Operatinal mode where an exception is thrown when a class file is not
@@ -38,7 +38,7 @@ class Loader
      * 
      */
     const MODE_NORMAL = 1;
-    
+
     /**
      * 
      * Operatinal mode where an exception is thrown when a class file is not
@@ -48,7 +48,7 @@ class Loader
      * 
      */
     const MODE_DEBUG = 2;
-    
+
     /**
      * 
      * Classes and interfaces loaded by the autoloader; the key is the class
@@ -58,7 +58,7 @@ class Loader
      * 
      */
     protected $loaded = [];
-    
+
     /**
      * 
      * A map of class name prefixes to directory paths.
@@ -67,7 +67,7 @@ class Loader
      * 
      */
     protected $paths = [];
-    
+
     /**
      * 
      * A map of exact class names to their file paths.
@@ -76,7 +76,7 @@ class Loader
      * 
      */
     protected $classes = [];
-    
+
     /**
      * 
      * The operational mode.
@@ -85,7 +85,7 @@ class Loader
      * 
      */
     protected $mode = self::MODE_NORMAL;
-    
+
     /**
      * 
      * A log of paths that have been tried during load(), for debug use.
@@ -94,7 +94,7 @@ class Loader
      * 
      */
     protected $tried_paths = [];
-    
+
     /**
      * 
      * Sets the autoloader operational mode.
@@ -106,7 +106,7 @@ class Loader
     {
         $this->mode = $mode;
     }
-    
+
     /**
      * 
      * Is the autoloader in debug mode?
@@ -118,7 +118,7 @@ class Loader
     {
         return $this->mode == self::MODE_DEBUG;
     }
-    
+
     /**
      * 
      * Is the autoloader in silent mode?
@@ -130,7 +130,7 @@ class Loader
     {
         return $this->mode == self::MODE_SILENT;
     }
-    
+
     /**
      * 
      * Registers this autoloader with SPL.
@@ -144,7 +144,7 @@ class Loader
     {
         spl_autoload_register([$this, 'load'], true, (bool) $prepend);
     }
-    
+
     /**
      * 
      * Unregisters this autoloader from SPL.
@@ -156,7 +156,7 @@ class Loader
     {
         spl_autoload_unregister([$this, 'load']);
     }
-    
+
     /**
      * 
      * Adds a directory path for a class name prefix.
@@ -178,7 +178,7 @@ class Loader
             $this->paths[$prefix][] = rtrim($path, DIRECTORY_SEPARATOR);
         }
     }
-    
+
     /**
      * 
      * Sets all class name prefixes and their paths. This overwrites the
@@ -207,7 +207,7 @@ class Loader
             $this->add($key, $val);
         }
     }
-    
+
     /**
      * 
      * Returns the list of all class name prefixes and their paths.
@@ -219,7 +219,7 @@ class Loader
     {
         return $this->paths;
     }
-    
+
     /**
      * 
      * Sets the exact file path for an exact class name.
@@ -235,7 +235,7 @@ class Loader
     {
         $this->classes[$class] = $path;
     }
-    
+
     /**
      * 
      * Sets all file paths for all class names; this overwrites all previous
@@ -251,7 +251,7 @@ class Loader
     {
         $this->classes = $classes;
     }
-    
+
     /**
      * 
      * Returns the list of exact class names and their paths.
@@ -263,7 +263,7 @@ class Loader
     {
         return $this->classes;
     }
-    
+
     /**
      * 
      * Returns the list of classes and interfaces loaded by the autoloader.
@@ -276,7 +276,7 @@ class Loader
     {
         return $this->loaded;
     }
-    
+
     /**
      * 
      * Loads a class or interface using the class name prefix and path,
@@ -302,7 +302,7 @@ class Loader
                 return;
             }
         }
-        
+
         // find the class file
         $file = $this->find($spec);
         if (! $file) {
@@ -317,10 +317,10 @@ class Loader
                 throw new Exception\NotReadable($message);
             }
         }
-        
+
         // load the file
         require $file;
-        
+
         // is the class declared now?
         if (! $this->isDeclared($spec)) {
             // no. do we care?
@@ -332,11 +332,11 @@ class Loader
                 return;
             }
         }
-        
+
         // done!
         $this->loaded[$spec] = $file;
     }
-    
+
     /**
      * 
      * Tells if a class, interface or trait exists.
@@ -352,7 +352,7 @@ class Loader
             || interface_exists($spec, false)
             || trait_exists($spec, false);
     }
-    
+
     /**
      * 
      * Finds the path to a class or interface using the class prefix paths and 
@@ -369,33 +369,33 @@ class Loader
         if (isset($this->classes[$spec])) {
             return $this->classes[$spec];
         }
-        
+
         $this->tried_paths = [];
-        
+
         // go through each of the path prefixes
         foreach ($this->paths as $prefix => $paths) {
-            
+
             // get the length of the prefix
             $len = strlen($prefix);
-            
+
             // does the prefix match?
             if (substr($spec, 0, $len) != $prefix) {
                 // no
                 continue;
             }
-            
+
             // .. convert class name to file name ...
             $ctf = $this->classToFile($spec);
-            
+
             // ... and go through each of the paths for the prefix
             foreach ($paths as $i => $path) {
-                
+
                 // track which paths we have tried
                 $this->tried_paths[] = "#{$i}: {$path}";
-                
+
                 // convert the remaining spec to a file name
                 $file = $path . DIRECTORY_SEPARATOR . $ctf;
-                
+
                 // does it exist?
                 if (is_readable($file)) {
                     // found it; retain in class map
@@ -403,7 +403,7 @@ class Loader
                 }
             }
         }
-        
+
         // fall back to the include path
         $file = $this->classToFile($spec);
         try {
@@ -416,7 +416,7 @@ class Loader
         $path = $obj->getRealPath();
         return $path;
     }
-    
+
     /**
      * 
      * PSR-0 compliant class-to-file inflector.
@@ -439,17 +439,18 @@ class Loader
             $namespace = substr($spec, 0, $pos);
             $namespace = str_replace('\\', DIRECTORY_SEPARATOR, $namespace)
                        . DIRECTORY_SEPARATOR;
-        
+
             // class portion
             $class = substr($spec, $pos + 1);
         }
-        
+
         // convert class underscores
         $file = $namespace
               . str_replace('_',  DIRECTORY_SEPARATOR, $class)
               . '.php';
-        
+
         // done!
         return $file;
     }
 }
+ 
