@@ -446,11 +446,11 @@ class Loader
 
         // convert class underscores
         $file = $namespace
-              . str_replace('_',  DIRECTORY_SEPARATOR, $class)
+              . str_replace('_', DIRECTORY_SEPARATOR, $class)
               . '.php';
 
         // done!
         return $file;
     }
 }
- 
+
