@@ -20,4 +20,3 @@ namespace Aura\Autoload;
 class Exception extends \Exception
 {
 }
- 

@@ -22,4 +22,3 @@ use Aura\Autoload\Exception;
 class NotReadable extends Exception
 {
 }
-

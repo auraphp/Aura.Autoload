@@ -22,4 +22,3 @@ use Aura\Autoload\Exception;
 class AlreadyLoaded extends Exception
 {
 }
-
