@@ -233,6 +233,34 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect, $actual);
     }
     
+    public function testAddClasses()
+    {
+        $autoloader = new Loader;
+        
+        $series_1 = [
+            'FooBar' => '/path/to/FooBar.php',
+            'BazDib' => '/path/to/BazDib.php',
+        ];
+        
+        $series_2 = [
+            'ZimGir' => '/path/to/ZimGir.php',
+            'IrkDoom' => '/path/to/IrkDoom.php',
+        ];
+        
+        $expect = [
+            'FooBar' => '/path/to/FooBar.php',
+            'BazDib' => '/path/to/BazDib.php',
+            'ZimGir' => '/path/to/ZimGir.php',
+            'IrkDoom' => '/path/to/IrkDoom.php',
+        ];
+        
+        $autoloader->addClasses($series_1);
+        $autoloader->addClasses($series_2);
+        
+        $actual = $autoloader->getClasses();
+        $this->assertSame($expect, $actual);
+    }
+    
     public function testSetPaths()
     {
         $class1 = 'Aura\Autoload\Foo\MockAutoloadCliClass';
