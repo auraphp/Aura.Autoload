@@ -1,1 +1,5 @@
-Added support for recognizing trait classes.
+- [CHG] Method Loader::add() now checks to see if prefix path has already been
+  added
+
+- [ADD] Method Loader::addClasses() to merge new class list with old one
+
