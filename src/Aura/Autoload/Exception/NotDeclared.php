@@ -11,6 +11,7 @@
 namespace Aura\Autoload\Exception;
 
 use Aura\Autoload\Exception;
+
 /**
  * 
  * Indicates the loader did not find a class definition after loading a file.
@@ -21,4 +22,3 @@ use Aura\Autoload\Exception;
 class NotDeclared extends Exception
 {
 }
- 

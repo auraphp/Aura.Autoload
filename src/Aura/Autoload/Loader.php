@@ -175,7 +175,11 @@ class Loader
     public function add($prefix, $paths)
     {
         foreach ((array) $paths as $path) {
-            $this->paths[$prefix][] = rtrim($path, DIRECTORY_SEPARATOR);
+            $path = rtrim($path, DIRECTORY_SEPARATOR);
+            if (! in_array($prefix, $this->paths)) {
+                // has not been added yet, so add it
+                $this->paths[$prefix][] = $path;
+            }
         }
     }
 
@@ -250,6 +254,21 @@ class Loader
     public function setClasses(array $classes)
     {
         $this->classes = $classes;
+    }
+
+    /**
+     * 
+     * Adds file paths for class names to the existing exact mappings.
+     * 
+     * @param array $classes An array of class-to-file mappings where the key 
+     * is the class name and the value is the file path.
+     * 
+     * @return void
+     * 
+     */
+    public function addClasses(array $classes)
+    {
+        $this->classes = array_merge($this->classes, $classes);
     }
 
     /**
@@ -446,11 +465,10 @@ class Loader
 
         // convert class underscores
         $file = $namespace
-              . str_replace('_',  DIRECTORY_SEPARATOR, $class)
+              . str_replace('_', DIRECTORY_SEPARATOR, $class)
               . '.php';
 
         // done!
         return $file;
     }
 }
- 

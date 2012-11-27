@@ -11,6 +11,7 @@
 namespace Aura\Autoload\Exception;
 
 use Aura\Autoload\Exception;
+
 /**
  * 
  * Indicates a class has already been loaded.
@@ -21,4 +22,3 @@ use Aura\Autoload\Exception;
 class AlreadyLoaded extends Exception
 {
 }
- 
