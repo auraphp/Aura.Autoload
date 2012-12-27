@@ -282,7 +282,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
             $class1 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Foo/MockAutoloadCliClass.php',
             $class2 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Bar/MockAutoloadRouterClass.php',
         ];
-        
+
+        $expect = str_replace('/', DIRECTORY_SEPARATOR, $expect);
+
         $actual = $autoloader->getLoaded();
         $this->assertSame($expect, $actual);
     }
