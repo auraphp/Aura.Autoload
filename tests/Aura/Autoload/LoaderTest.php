@@ -279,8 +279,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($class1, $actual);
         
         $expect = [
-            $class1 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Foo/MockAutoloadCliClass.php',
-            $class2 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura/Autoload/Bar/MockAutoloadRouterClass.php',
+            $class1 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura' . DIRECTORY_SEPARATOR . 'Autoload' . DIRECTORY_SEPARATOR . 'Foo' . DIRECTORY_SEPARATOR . 'MockAutoloadCliClass.php',
+            $class2 => dirname( dirname( __DIR__ ) ) . DIRECTORY_SEPARATOR . 'Aura' . DIRECTORY_SEPARATOR . 'Autoload' . DIRECTORY_SEPARATOR . 'Bar' . DIRECTORY_SEPARATOR . 'MockAutoloadRouterClass.php',
         ];
         
         $actual = $autoloader->getLoaded();
