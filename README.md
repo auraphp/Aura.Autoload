@@ -105,3 +105,34 @@ $loader->setClasses([
     'Vendor\Package\Zim' => '/path/to/Vendor/Package/Zim.php',
 ]);
 ```
+
+Modes
+=====
+
+In some cases if you are using Exact class usage and if that file contains
+a check for [class_exists](http://php.net/manual/en/function.class-exists.php)
+like functions without second parameter, you will end up with Exceptions. 
+As we follow <https://wiki.php.net/rfc/splclassloader>, we have three modes 
+which will be helpful.
+
+    * MODE_SILENT (0) : where no exceptions are thrown under error conditions.
+    * MODE_NORMAL (1) : where an exception is thrown when a class file is not found.
+    * MODE_DEBUG  (2) : where an exception is thrown when a class file is not 
+    found, or if after loading the file the class is still not declared.
+     
+Setting different Modes
+=======================
+
+You can either set the mode as 
+
+```php
+<?php
+$loader->setMode(\Aura\Autoload\Loader::MODE_SILENT);
+```
+
+Or by passing the values 0,1, 2.
+
+```php
+<?php
+$loader->setMode(0);
+```
