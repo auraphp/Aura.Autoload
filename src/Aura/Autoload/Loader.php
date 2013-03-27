@@ -303,11 +303,17 @@ class Loader
      * 
      * @param string $spec The class or interface to load.
      * 
-     * @return void
+     * @throws Exception\AlreadyLoaded in debug mode when the class is
+     * already loaded
      * 
      * @throws Exception\NotReadable when the file for the class or 
      * interface is not found.
      * 
+     * @throws Exception\NotDeclared in debug mode when the class is
+     * not declared
+     *
+     * @return void
+     *
      */
     public function load($spec)
     {
