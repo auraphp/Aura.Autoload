@@ -31,7 +31,7 @@ class Loader
 
     /**
      * 
-     * Operatinal mode where an exception is thrown when a class file is not
+     * Operational mode where an exception is thrown when a class file is not
      * found.
      *
      * @const
@@ -41,7 +41,7 @@ class Loader
 
     /**
      * 
-     * Operatinal mode where an exception is thrown when a class file is not
+     * Operational mode where an exception is thrown when a class file is not
      * found, or if after loading the file the class is still not declared.
      *
      * @const
