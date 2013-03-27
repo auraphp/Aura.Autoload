@@ -31,7 +31,7 @@ class Loader
 
     /**
      * 
-     * Operatinal mode where an exception is thrown when a class file is not
+     * Operational mode where an exception is thrown when a class file is not
      * found.
      *
      * @const
@@ -41,7 +41,7 @@ class Loader
 
     /**
      * 
-     * Operatinal mode where an exception is thrown when a class file is not
+     * Operational mode where an exception is thrown when a class file is not
      * found, or if after loading the file the class is still not declared.
      *
      * @const
@@ -303,11 +303,17 @@ class Loader
      * 
      * @param string $spec The class or interface to load.
      * 
-     * @return void
+     * @throws Exception\AlreadyLoaded in debug mode when the class is
+     * already loaded
      * 
      * @throws Exception\NotReadable when the file for the class or 
      * interface is not found.
      * 
+     * @throws Exception\NotDeclared in debug mode when the class is
+     * not declared
+     *
+     * @return void
+     *
      */
     public function load($spec)
     {
@@ -379,7 +385,7 @@ class Loader
      * 
      * @param string $spec The class or interface to find.
      * 
-     * @return The absolute path to the class or interface.
+     * @return string The absolute path to the class or interface.
      * 
      */
     public function find($spec)
