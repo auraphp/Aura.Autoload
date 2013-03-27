@@ -379,7 +379,7 @@ class Loader
      * 
      * @param string $spec The class or interface to find.
      * 
-     * @return The absolute path to the class or interface.
+     * @return string The absolute path to the class or interface.
      * 
      */
     public function find($spec)
