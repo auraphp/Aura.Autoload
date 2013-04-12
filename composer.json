@@ -11,9 +11,8 @@
         "class loader"
     ],
     "homepage": "http://auraphp.github.com/Aura.Autoload",
-    "version": "1.0.0",
-    "time": "2012-11-27",
-    "license": "BSD",
+    "time": "2013-04-12",
+    "license": "BSD-2-Clause",
     "authors": [
         {
             "name": "Aura.Autoload Contributors",
