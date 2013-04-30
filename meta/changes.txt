@@ -1,5 +1,8 @@
-- [CHG] Method Loader::add() now checks to see if prefix path has already been
-  added
+- [CHG] Update tests to use DIRECTORY_SEPARATOR. Thanks, @nakymaton and @mapthegod.
 
-- [ADD] Method Loader::addClasses() to merge new class list with old one
+- [CHG] Update the README; thanks, @harikt.
+
+- [CHG] Update docblocks; thanks, @dhaaker.
+
+
 
