@@ -95,11 +95,11 @@ $loader->setClass('VendorClassName', '/path/to/VendorClassName.php');
 This allows you to build relatively fast lookup maps of class names to file
 names.
 
-You can also set all classes at once using the `setClasses()` method:
+You can also set all classes at once using the `setClassFiles()` method:
 
 ```php
 <?php
-$loader->setClasses([
+$loader->setClassFiles([
     'Vendor\Package\Foo' => '/path/to/Vendor/Package/Foo.php',
     'Vendor\Package\Bar' => '/path/to/Vendor/Package/Bar.php',
     'Vendor\Package\Zim' => '/path/to/Vendor/Package/Zim.php',
