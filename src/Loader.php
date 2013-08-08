@@ -23,6 +23,24 @@ class Loader
 {
     /**
      * 
+     * A map of explicit class names to their file paths.
+     * 
+     * @var array
+     * 
+     */
+    protected $class_files = [];
+
+    /**
+     * 
+     * Debug information populated by loadClass().
+     * 
+     * @var array
+     * 
+     */
+    protected $debug = [];
+
+    /**
+     * 
      * Classes, interfaces, and traits loaded by the autoloader; the key is
      * the class name and the value is the file name.
      * 
@@ -39,24 +57,6 @@ class Loader
      * 
      */
     protected $prefixes = [];
-
-    /**
-     * 
-     * A map of explicit class names to their file paths.
-     * 
-     * @var array
-     * 
-     */
-    protected $class_files = [];
-
-    /**
-     * 
-     * Debug information populated by loadClass().
-     * 
-     * @var array
-     * 
-     */
-    protected $debug = [];
 
     /**
      * 
