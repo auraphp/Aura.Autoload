@@ -140,23 +140,6 @@ class Loader
 
     /**
      * 
-     * Adds several prefixes with base directories at once.
-     * 
-     * @param array $prefixes An associative array of namespace prefixes and
-     * their base directories.
-     * 
-     * @return null
-     * 
-     */
-    public function addPrefixes(array $prefixes)
-    {
-        foreach ($prefixes as $prefix => $base_dirs) {
-            $this->addPrefix($prefix, $base_dirs, $prepend);
-        }
-    }
-    
-    /**
-     * 
      * Sets all namespace prefixes and their base directories. This overwrites
      * the existing prefixes.
      * 
