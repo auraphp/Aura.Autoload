@@ -1,7 +1,7 @@
 <?php
 /**
  * 
- * This file is part of the Aura project for PHP.
+ * This file is part of Aura for PHP.
  * 
  * @package Aura.Autoload
  * 
@@ -15,8 +15,6 @@ namespace Aura\Autoload;
  * An SPL autoloader adhering to PSR-4.
  * 
  * @package Aura.Autoload
- * 
- * @todo Add back include-path.
  * 
  */
 class Loader
