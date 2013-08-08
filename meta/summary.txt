@@ -1,1 +1,0 @@
-PSR-0 compliant autoloader for PHP 5.4

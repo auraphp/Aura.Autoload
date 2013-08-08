@@ -1,8 +1,0 @@
-- [CHG] Update tests to use DIRECTORY_SEPARATOR. Thanks, @nakymaton and @mapthegod.
-
-- [CHG] Update the README; thanks, @harikt.
-
-- [CHG] Update docblocks; thanks, @dhaaker.
-
-
-
