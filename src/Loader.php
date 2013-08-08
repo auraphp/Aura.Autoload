@@ -138,7 +138,17 @@ class Loader
         }
     }
 
-    public function addPrefixes($prefixes, $prepend = false)
+    /**
+     * 
+     * Adds several prefixes with base directories at once.
+     * 
+     * @param array $prefixes An associative array of namespace prefixes and
+     * their base directories.
+     * 
+     * @return null
+     * 
+     */
+    public function addPrefixes(array $prefixes)
     {
         foreach ($prefixes as $prefix => $base_dirs) {
             $this->addPrefix($prefix, $base_dirs, $prepend);
@@ -156,7 +166,7 @@ class Loader
      * @return null
      * 
      */
-    public function setPrefixes(array $prefixes = [])
+    public function setPrefixes(array $prefixes)
     {
         $this->prefixes = [];
         foreach ($prefixes as $key => $val) {

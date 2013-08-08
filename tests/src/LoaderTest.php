@@ -30,9 +30,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'Aura\Autoload\Foo';
 
-        $this->loader->addPrefixes([
-            'Aura\Autoload\\' => __DIR__,
-        ]);
+        $this->loader->addPrefix('Aura\Autoload\\', __DIR__);
         
         $expect_file = __DIR__ . DIRECTORY_SEPARATOR . 'Foo.php';
         $actual_file = $this->loader->loadClass($class);
