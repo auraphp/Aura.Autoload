@@ -170,13 +170,12 @@ $baz = new \Foo\Bar\Baz;
 
 // examine the debug information
 var_dump($loader->getDebug());
-
 // [
 //     'Loading Foo\\Bar\\Baz',
 //     'No explicit class file',
 //     'Foo\\Bar\\: /path/to/foo-bar/Baz.php not found',
 //     'Foo\\: no base dirs',
 //     'Foo\\Bar\\Baz not loaded',
-// ];
+// ]
 ?>
 ```
