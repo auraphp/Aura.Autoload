@@ -32,8 +32,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->loader->addPrefix('Aura\Autoload\\', __DIR__);
         
-        $expect_file = __DIR__ . DIRECTORY_SEPARATOR . 'Foo.php';
-        $actual_file = $this->loader->loadClass($class);
+        $expect_file = $this->nds(__DIR__ . '/Foo.php');
+        $actual_file = $this->nds($this->loader->loadClass($class));
         
         $this->assertSame($expect_file, $actual_file);
         
@@ -65,11 +65,11 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         // prepend
         $this->loader->addPrefix('Foo\Bar', '/path/to/foo-bar/src', true);
         
-        $actual = $this->loader->getPrefixes();
+        $actual = $this->nds($this->loader->getPrefixes());
         $expect = [
             'Foo\Bar\\' => [
-                '/path/to/foo-bar/src/',
-                '/path/to/foo-bar/tests/',
+                $this->nds('/path/to/foo-bar/src/'),
+                $this->nds('/path/to/foo-bar/tests/'),
             ],
         ];
         $this->assertSame($expect, $actual);
@@ -78,16 +78,16 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testSetPrefixes()
     {
         $this->loader->setPrefixes([
-            'Foo\Bar' => '/foo/bar',
-            'Baz\Dib' => '/baz/dib',
-            'Zim\Gir' => '/zim/gir',
+            'Foo\Bar' => $this->nds('/foo/bar'),
+            'Baz\Dib' => $this->nds('/baz/dib'),
+            'Zim\Gir' => $this->nds('/zim/gir'),
         ]);
         
         $actual = $this->loader->getPrefixes();
         $expect = [
-            'Foo\Bar\\' => ['/foo/bar/'],
-            'Baz\Dib\\' => ['/baz/dib/'],
-            'Zim\Gir\\' => ['/zim/gir/'],
+            'Foo\Bar\\' => [$this->nds('/foo/bar/')],
+            'Baz\Dib\\' => [$this->nds('/baz/dib/')],
+            'Zim\Gir\\' => [$this->nds('/zim/gir/')],
         ];
         $this->assertSame($expect, $actual);
     }
@@ -95,12 +95,12 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testLoadExplicitClass()
     {
         $class = 'Aura\Autoload\Bar';
-        $file  = __DIR__ . DIRECTORY_SEPARATOR . 'Bar.php';
+        $file  = $this->nds(__DIR__ . '/Bar.php');
         $this->loader->setClassFiles([
             $class => $file,
         ]);
 
-        $actual_file = $this->loader->loadClass($class);
+        $actual_file = $this->nds($this->loader->loadClass($class));
         $this->assertSame($file, $actual_file);
         
         // is it actually loaded?
@@ -117,11 +117,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testLoadExplicitClassMissing()
     {
         $class = 'Aura\Autoload\MissingClass';
-        $file  = __DIR__ . DIRECTORY_SEPARATOR . 'MissingClass.php';
-        $this->loader->setClassFiles([
-            $class => $file,
-        ]);
-
+        $file  = $this->nds(__DIR__ . '/MissingClass.php');
+        $this->loader->setClassFiles([$class => $file]);
+        
         $this->assertFalse($this->loader->loadClass($class));
         
         $loaded = $this->loader->getLoadedClasses();
@@ -131,20 +129,20 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testAddClassFiles()
     {
         $series_1 = [
-            'FooBar' => '/path/to/FooBar.php',
-            'BazDib' => '/path/to/BazDib.php',
+            'FooBar'  => $this->nds('/path/to/FooBar.php'),
+            'BazDib'  => $this->nds('/path/to/BazDib.php'),
         ];
         
         $series_2 = [
-            'ZimGir' => '/path/to/ZimGir.php',
-            'IrkDoom' => '/path/to/IrkDoom.php',
+            'ZimGir'  => $this->nds('/path/to/ZimGir.php'),
+            'IrkDoom' => $this->nds('/path/to/IrkDoom.php'),
         ];
         
         $expect = [
-            'FooBar' => '/path/to/FooBar.php',
-            'BazDib' => '/path/to/BazDib.php',
-            'ZimGir' => '/path/to/ZimGir.php',
-            'IrkDoom' => '/path/to/IrkDoom.php',
+            'FooBar'  => $this->nds('/path/to/FooBar.php'),
+            'BazDib'  => $this->nds('/path/to/BazDib.php'),
+            'ZimGir'  => $this->nds('/path/to/ZimGir.php'),
+            'IrkDoom' => $this->nds('/path/to/IrkDoom.php'),
         ];
         
         $this->loader->addClassFiles($series_1);
@@ -157,18 +155,18 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     public function testSetClassFiles()
     {
         $this->loader->setClassFiles([
-            'FooBar' => '/path/to/FooBar.php',
-            'BazDib' => '/path/to/BazDib.php',
-            'ZimGir' => '/path/to/ZimGir.php',
+            'FooBar' => $this->nds('/path/to/FooBar.php'),
+            'BazDib' => $this->nds('/path/to/BazDib.php'),
+            'ZimGir' => $this->nds('/path/to/ZimGir.php'),
         ]);
-        
-        $this->loader->setClassFile('IrkDoom', '/path/to/IrkDoom.php');
+
+        $this->loader->setClassFile('IrkDoom', $this->nds('/path/to/IrkDoom.php'));
 
         $expect = [
-            'FooBar' => '/path/to/FooBar.php',
-            'BazDib' => '/path/to/BazDib.php',
-            'ZimGir' => '/path/to/ZimGir.php',
-            'IrkDoom' => '/path/to/IrkDoom.php',
+            'FooBar'  => $this->nds('/path/to/FooBar.php'),
+            'BazDib'  => $this->nds('/path/to/BazDib.php'),
+            'ZimGir'  => $this->nds('/path/to/ZimGir.php'),
+            'IrkDoom' => $this->nds('/path/to/IrkDoom.php'),
         ];
         
         $actual = $this->loader->getClassFiles();
@@ -191,5 +189,19 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         ];
         
         $this->assertSame($expect, $actual);
+    }
+    
+    public function testPsr0Loading()
+    {
+        $this->loader->addPrefix('Baz\Qux', __DIR__ . '/Baz/Qux');
+        $actual = $this->nds($this->loader->loadClass('Baz\Qux\Quux'));
+        $expect = $this->nds(__DIR__ . '/Baz/Qux/Quux.php');
+        $this->assertSame($expect, $actual);
+    }
+    
+    // normalize directory separators in file names for windows compatibilitys
+    protected function nds($file)
+    {
+        return str_replace('/', DIRECTORY_SEPARATOR, $file);
     }
 }
