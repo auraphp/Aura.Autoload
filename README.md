@@ -1,6 +1,8 @@
 Aura Autoload
 =============
 
+[![Build Status](https://travis-ci.org/auraphp/Aura.Autoload.png)](https://travis-ci.org/auraphp/Aura.Autoload)
+
 The Aura Autoload package provides a
 [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
 compliant SPL autoloader implementation for PHP. It also matches the interface
@@ -15,7 +17,7 @@ notice compliance oversights, please send a patch via pull request.
 
 
 Include-Path Usage
-==================
+------------------
 
 Create an instance of the `Loader` and register it with SPL.
 
@@ -30,7 +32,7 @@ include-path, and throw an `Exception\NotDeclared` if it cannot find one.
 
 
 Class Prefix Usage
-==================
+------------------
 
 You can tell the `Loader` to search particular paths for classes with specific
 prefixes. The prefixes can be the older PEAR-style class prefixes, or the
@@ -81,7 +83,7 @@ $loader->setPaths([
 ```
 
 Exact Class Usage
-=================
+-----------------
 
 You can tell the `Loader` where a specific individual class is located using
 the `setClass()` method.
@@ -107,7 +109,7 @@ $loader->setClasses([
 ```
 
 Modes
-=====
+-----
 
 In some cases if you are using Exact class usage and if that file contains
 a check for [class_exists](http://php.net/manual/en/function.class-exists.php)
@@ -121,7 +123,7 @@ which will be helpful.
     found, or if after loading the file the class is still not declared.
      
 Setting different Modes
-=======================
+-----------------------
 
 You can either set the mode as 
 
