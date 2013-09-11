@@ -1,7 +1,7 @@
 Aura Autoload
 =============
 
-[![Build Status](https://travis-ci.org/auraphp/Aura.Autoload.png)](https://travis-ci.org/auraphp/Aura.Autoload)
+[![Build Status](https://travis-ci.org/auraphp/Aura.Autoload.png?branch=develop)](https://travis-ci.org/auraphp/Aura.Autoload)
 
 The Aura Autoload package provides a
 [PSR-0](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md)
