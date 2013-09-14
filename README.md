@@ -25,6 +25,7 @@ Create an instance of the `Loader` and register it with SPL.
 <?php
 $loader = require '/path/to/Aura.Autoload/scripts/instance.php';
 $loader->register();
+?>
 ```
 
 The `Loader` will now look for PSR-0 compliant class names in the
@@ -49,6 +50,7 @@ $loader->add('Vendor\Package\\', '/path/to/Vendor.Package/src');
 // additionally, e.g. in testing modes, also look for Vendor\Package
 // classes in this path as well:
 $loader->add('Vendor\Package\\', '/path/to/Vendor.Package/tests');
+?>
 ```
 
 (Note that you should end formal namespace prefixes with a double-backslash,
@@ -63,6 +65,7 @@ structure. For example, this ...
 ```php
 <?php
 $loader->add('Vendor\Package\\', '/path/to/Vendor.Package/src');
+?>
 ```
 ... assumes a directory structure like this:
 
@@ -80,6 +83,7 @@ $loader->setPaths([
     'Aura\Router\\' => '/path/to/project/Aura.Router/src/',
     'Aura\Di\\'     => '/path/to/project/Aura.Di/src/',
 ]);
+?>
 ```
 
 Exact Class Usage
@@ -92,6 +96,7 @@ the `setClass()` method.
 <?php
 // look for the VendorClassName at this location:
 $loader->setClass('VendorClassName', '/path/to/VendorClassName.php');
+?>
 ```
 
 This allows you to build relatively fast lookup maps of class names to file
@@ -106,6 +111,7 @@ $loader->setClasses([
     'Vendor\Package\Bar' => '/path/to/Vendor/Package/Bar.php',
     'Vendor\Package\Zim' => '/path/to/Vendor/Package/Zim.php',
 ]);
+?>
 ```
 
 Modes
@@ -117,19 +123,21 @@ like functions without second parameter, you will end up with Exceptions.
 As we follow <https://wiki.php.net/rfc/splclassloader>, we have three modes 
 which will be helpful.
 
-    * MODE_SILENT (0) : where no exceptions are thrown under error conditions.
-    * MODE_NORMAL (1) : where an exception is thrown when a class file is not found.
-    * MODE_DEBUG  (2) : where an exception is thrown when a class file is not 
-    found, or if after loading the file the class is still not declared.
-     
-Setting different Modes
+* MODE_SILENT (0) : where no exceptions are thrown under error conditions.
+* MODE_NORMAL (1) : where an exception is thrown when a class file is not found.
+* MODE_DEBUG  (2) : where an exception is thrown when a class file is not 
+  found, or if after loading the file the class is still not declared.
+
+
+Setting Different Modes
 -----------------------
 
 You can either set the mode as 
 
 ```php
 <?php
-$loader->setMode(\Aura\Autoload\Loader::MODE_SILENT);
+$loader->setMode($loader::MODE_SILENT);
+?>
 ```
 
 Or by passing the values 0,1, 2.
@@ -137,4 +145,5 @@ Or by passing the values 0,1, 2.
 ```php
 <?php
 $loader->setMode(0);
+?>
 ```
