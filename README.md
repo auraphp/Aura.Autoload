@@ -20,7 +20,7 @@ _autoload.php_ file.
 
 ### Dependencies and PHP Version
 
-As with all Aura libraries, this library has no external dependencies. It
+As with all Aura libraries, this library has no userland dependencies. It
 requires PHP version 5.3 or later.
 
 ### Tests
