@@ -26,7 +26,7 @@ class Loader
      * @var array
      * 
      */
-    protected $class_files = [];
+    protected $class_files = array();
 
     /**
      * 
@@ -35,7 +35,7 @@ class Loader
      * @var array
      * 
      */
-    protected $debug = [];
+    protected $debug = array();
 
     /**
      * 
@@ -45,7 +45,7 @@ class Loader
      * @var array
      * 
      */
-    protected $loaded_classes = [];
+    protected $loaded_classes = array();
 
     /**
      * 
@@ -54,7 +54,7 @@ class Loader
      * @var array
      * 
      */
-    protected $prefixes = [];
+    protected $prefixes = array();
 
     /**
      * 
@@ -67,7 +67,11 @@ class Loader
      */
     public function register($prepend = false)
     {
-        spl_autoload_register([$this, 'loadClass'], true, (bool) $prepend);
+        spl_autoload_register(
+            array($this, 'loadClass'),
+            true,
+            (bool) $prepend
+        );
     }
 
     /**
@@ -79,7 +83,7 @@ class Loader
      */
     public function unregister()
     {
-        spl_autoload_unregister([$this, 'loadClass']);
+        spl_autoload_unregister(array($this, 'loadClass'));
     }
 
     /**
@@ -118,7 +122,7 @@ class Loader
         
         // initialize the namespace prefix array if needed
         if (! isset($this->prefixes[$prefix])) {
-            $this->prefixes[$prefix] = [];
+            $this->prefixes[$prefix] = array();
         }
         
         // normalize each base dir with a trailing separator
@@ -149,7 +153,7 @@ class Loader
      */
     public function setPrefixes(array $prefixes)
     {
-        $this->prefixes = [];
+        $this->prefixes = array();
         foreach ($prefixes as $key => $val) {
             $this->addPrefix($key, $val);
         }
@@ -253,7 +257,7 @@ class Loader
     public function loadClass($class)
     {
         // reset debug info
-        $this->debug = ["Loading $class"];
+        $this->debug = array("Loading $class");
         
         // is an explicit class file noted?
         if (isset($this->class_files[$class])) {

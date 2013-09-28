@@ -43,7 +43,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($class, $actual);
         
         // is it recorded as loaded?
-        $expect = [$class => $expect_file];
+        $expect = array($class => $expect_file);
         $actual = $this->loader->getLoadedClasses();
         $this->assertSame($expect, $actual);
     }
@@ -66,29 +66,29 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->loader->addPrefix('Foo\Bar', '/path/to/foo-bar/src', true);
         
         $actual = $this->nds($this->loader->getPrefixes());
-        $expect = [
-            'Foo\Bar\\' => [
+        $expect = array(
+            'Foo\Bar\\' => array(
                 $this->nds('/path/to/foo-bar/src/'),
                 $this->nds('/path/to/foo-bar/tests/'),
-            ],
-        ];
+            ),
+        );
         $this->assertSame($expect, $actual);
     }
     
     public function testSetPrefixes()
     {
-        $this->loader->setPrefixes([
+        $this->loader->setPrefixes(array(
             'Foo\Bar' => $this->nds('/foo/bar'),
             'Baz\Dib' => $this->nds('/baz/dib'),
             'Zim\Gir' => $this->nds('/zim/gir'),
-        ]);
+        ));
         
         $actual = $this->loader->getPrefixes();
-        $expect = [
-            'Foo\Bar\\' => [$this->nds('/foo/bar/')],
-            'Baz\Dib\\' => [$this->nds('/baz/dib/')],
-            'Zim\Gir\\' => [$this->nds('/zim/gir/')],
-        ];
+        $expect = array(
+            'Foo\Bar\\' => array($this->nds('/foo/bar/')),
+            'Baz\Dib\\' => array($this->nds('/baz/dib/')),
+            'Zim\Gir\\' => array($this->nds('/zim/gir/')),
+        );
         $this->assertSame($expect, $actual);
     }
     
@@ -96,9 +96,9 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'Aura\Autoload\Bar';
         $file  = $this->nds(__DIR__ . '/Bar.php');
-        $this->loader->setClassFiles([
+        $this->loader->setClassFiles(array(
             $class => $file,
-        ]);
+        ));
 
         $actual_file = $this->nds($this->loader->loadClass($class));
         $this->assertSame($file, $actual_file);
@@ -109,7 +109,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($class, $actual);
         
         // is it recorded as loaded?
-        $expect = [$class => $file];
+        $expect = array($class => $file);
         $actual = $this->loader->getLoadedClasses();
         $this->assertSame($expect, $actual);
     }
@@ -118,7 +118,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'Aura\Autoload\MissingClass';
         $file  = $this->nds(__DIR__ . '/MissingClass.php');
-        $this->loader->setClassFiles([$class => $file]);
+        $this->loader->setClassFiles(array($class => $file));
         
         $this->assertFalse($this->loader->loadClass($class));
         
@@ -128,22 +128,22 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     
     public function testAddClassFiles()
     {
-        $series_1 = [
+        $series_1 = array(
             'FooBar'  => $this->nds('/path/to/FooBar.php'),
             'BazDib'  => $this->nds('/path/to/BazDib.php'),
-        ];
+        );
         
-        $series_2 = [
+        $series_2 = array(
             'ZimGir'  => $this->nds('/path/to/ZimGir.php'),
             'IrkDoom' => $this->nds('/path/to/IrkDoom.php'),
-        ];
+        );
         
-        $expect = [
+        $expect = array(
             'FooBar'  => $this->nds('/path/to/FooBar.php'),
             'BazDib'  => $this->nds('/path/to/BazDib.php'),
             'ZimGir'  => $this->nds('/path/to/ZimGir.php'),
             'IrkDoom' => $this->nds('/path/to/IrkDoom.php'),
-        ];
+        );
         
         $this->loader->addClassFiles($series_1);
         $this->loader->addClassFiles($series_2);
@@ -154,20 +154,20 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     
     public function testSetClassFiles()
     {
-        $this->loader->setClassFiles([
+        $this->loader->setClassFiles(array(
             'FooBar' => $this->nds('/path/to/FooBar.php'),
             'BazDib' => $this->nds('/path/to/BazDib.php'),
             'ZimGir' => $this->nds('/path/to/ZimGir.php'),
-        ]);
+        ));
 
         $this->loader->setClassFile('IrkDoom', $this->nds('/path/to/IrkDoom.php'));
 
-        $expect = [
+        $expect = array(
             'FooBar'  => $this->nds('/path/to/FooBar.php'),
             'BazDib'  => $this->nds('/path/to/BazDib.php'),
             'ZimGir'  => $this->nds('/path/to/ZimGir.php'),
             'IrkDoom' => $this->nds('/path/to/IrkDoom.php'),
-        ];
+        );
         
         $actual = $this->loader->getClassFiles();
         $this->assertSame($expect, $actual);
@@ -180,13 +180,13 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         
         $actual = $this->loader->getDebug();
         
-        $expect = [
+        $expect = array(
             'Loading Foo\\Bar\\Baz',
             'No explicit class file',
             'Foo\\Bar\\: /path/to/foo-bar/Baz.php not found',
             'Foo\\: no base dirs',
             'Foo\\Bar\\Baz not loaded',
-        ];
+        );
         
         $this->assertSame($expect, $actual);
     }
