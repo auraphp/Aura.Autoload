@@ -1,63 +1,48 @@
-Aura.Autoload
-=============
+# Aura.Autoload
 
-Overview
---------
+Provides a PSR-4 (and limited PSR-0) autoloading facility. Although it is
+installable via Composer, its best use is probably outside a Composer-oriented
+project.
 
-The Aura.Autoload library provides a PSR-4 (and limited PSR-0) autoloading
-facility.  Although it is installable via Composer, its best use is probably 
-outside a Composer-oriented project.
+## Foreword
 
 ### Installation and Autoloading
 
-This library is installable via Composer and is registered on Packagist at
-<https://packagist.org/packages/aura/autoload>. Installing via Composer will
-set up autoloading automatically.
+This library is installable and autoloadable via Composer with the following
+`require` element in your `composer.json` file:
 
+    "require": {
+        "aura/autoload": "dev-develop-2"
+    }
+    
 Alternatively, download or clone this repository, then require or include its
 _autoload.php_ file.
 
-### Dependencies
+### Dependencies and PHP Version
 
-As with all Aura libraries, this library has no external dependencies.
+As with all Aura libraries, this library has no external dependencies. It
+requires PHP version 5.3 or later.
 
 ### Tests
 
-This library has 100% code coverage. To run the library tests, first install
-[PHPUnit][], then go to the library _tests_ directory and issue `phpunit` at
-the command line.
+[![Build Status](https://travis-ci.org/auraphp/Aura.Autoload.png?branch=develop-2)](https://travis-ci.org/auraphp/Aura.Autoload)
+
+This library has 100% code coverage with [PHPUnit][]. To run the tests at the
+command line, go to the _tests_ directory and issue `phpunit`.
 
 [PHPUnit]: http://phpunit.de/manual/
 
-### API Documentation
-
-This library has embedded DocBlock API documentation. To generate the
-documentation in HTML, first install [PHPDocumentor][] or [ApiGen][], then go
-to the library directory and issue one of the following at the command line:
-
-    # for PHPDocumentor
-    phpdoc -d ./src/ -t /path/to/output/
-    
-    # for ApiGen
-    apigen --source=./src/ --destination=/path/to/output/
-
-You can then browse the HTML-formatted API documentation at _/path/to/output_.
-
-[PHPDocumentor]: http://phpdoc.org/docs/latest/for-users/installation.html
-[ApiGen]: http://apigen.org/#installation
-
 ### PSR Compliance
 
-This library is compliant with [PSR-1][] and [PSR-2][]. If you notice
-compliance oversights, please send a patch via pull request.
+This library attempts to comply with [PSR-1][], [PSR-2][], and [PSR-4][]. If
+you notice compliance oversights, please send a patch via pull request.
 
 [PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
+[PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
 
-Basic Usage
------------
 
-### Instantiation
+## Getting Started
 
 To use the autoloader, first instantiate it, then register it with SPL
 autoloader stack:
@@ -74,7 +59,7 @@ $loader->register();
 
 ### PSR-4 Namespace Prefixes
 
-To add a namespace conforming to PSR-4 specifications, point to the base
+To add a namespace conforming to [PSR-4][] specifications, point to the base
 directory for that namespace. Multiple base directories are allowed, and will
 be searched in the order they are added.
 
@@ -106,10 +91,10 @@ $loader->setPrefixes([
 
 ### PSR-0 Namespaces
 
-To add a namespace conforming to PSR-0 specifications, one that uses only
-namespace separators (no underscores), point to the directory containing
-classes for that namespace. Multiple directories are allowed, and will be
-searched in the order they are added.
+To add a namespace conforming to [PSR-0][] specifications, one that uses only
+namespace separators in the class names (no underscores allowed!), point to
+the directory containing classes for that namespace. Multiple directories are
+allowed, and will be searched in the order they are added.
 
 ```php
 <?php
@@ -130,9 +115,9 @@ $loader->setClassFile('Foo\Bar\Baz', '/path/to/Foo/Bar/Baz.php');
 ?>
 ```
 
-To set several class-to-file mappings at once, overriding all previous mappings,
-use `setClassFiles()`. (Alternatively, use `addClassFiles()` to append to 
-the existing mappings.)
+To set several class-to-file mappings at once, overriding all previous
+mappings, use `setClassFiles()`. (Alternatively, use `addClassFiles()` to
+append to the existing mappings.)
 
 ```php
 <?php
