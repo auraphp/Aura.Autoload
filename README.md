@@ -74,17 +74,17 @@ settings, use `setPrefixes()`.
 
 ```php
 <?php
-$loader->setPrefixes([
-    'Foo\Bar' => [
+$loader->setPrefixes(array(
+    'Foo\Bar' => array(
         '/path/to/foo-bar/src',
         '/path/to/foo-bar/tests',
-    ],
+    ),
     
-    'Baz\Dib' => [
+    'Baz\Dib' => array(
         '/path/to/baz.dib/src',
         '/path/to/baz.dib/tests',
-    ],
-]);
+    ),
+));
 ?>
 ```
 
@@ -120,11 +120,11 @@ append to the existing mappings.)
 
 ```php
 <?php
-$loader->setClassFiles([
+$loader->setClassFiles(array(
     'Foo\Bar\Baz'  => '/path/to/Foo/Bar/Baz.php',
     'Foo\Bar\Qux'  => '/path/to/Foo/Bar/Qux.php',
     'Foo\Bar\Quux' => '/path/to/Foo/Bar/Quux.php',
-]);
+));
 ?>
 ```
 
@@ -154,12 +154,12 @@ $baz = new \Foo\Bar\Baz;
 
 // examine the debug information
 var_dump($loader->getDebug());
-// [
+// array(
 //     'Loading Foo\\Bar\\Baz',
 //     'No explicit class file',
 //     'Foo\\Bar\\: /path/to/foo-bar/Baz.php not found',
 //     'Foo\\: no base dirs',
 //     'Foo\\Bar\\Baz not loaded',
-// ]
+// )
 ?>
 ```
