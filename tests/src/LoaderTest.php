@@ -38,9 +38,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect_file, $actual_file);
         
         // is it actually loaded?
-        $classes = get_declared_classes();
-        $actual = array_pop($classes);
-        $this->assertSame($class, $actual);
+        $this->assertTrue(in_array($class, get_declared_classes()));
         
         // is it recorded as loaded?
         $expect = array($class => $expect_file);
@@ -104,9 +102,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($file, $actual_file);
         
         // is it actually loaded?
-        $classes = get_declared_classes();
-        $actual = array_pop($classes);
-        $this->assertSame($class, $actual);
+        $this->assertTrue(in_array($class, get_declared_classes()));
         
         // is it recorded as loaded?
         $expect = array($class => $file);
