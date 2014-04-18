@@ -6,32 +6,24 @@ project.
 
 ## Foreword
 
-### Requirements
+### Installation
 
 This library requires PHP 5.3 or later, and has no userland dependencies.
 
-### Installation
+It is installable and autoloadable via Composer as [`aura/autoload`](https://packagist.org/packages/aura/autoload).
 
-This library is installable and autoloadable via Composer with the following
-`require` element in your `composer.json` file:
+Alternatively, [download a release](/Aura.Autoload/releases) or clone this repository, then require or include its _autoload.php_ file.
 
-    "require": {
-        "aura/autoload": "dev-develop-2"
-    }
-    
-Alternatively, download or clone this repository, then require or include its
-_autoload.php_ file.
+### Quality
 
-### Tests
-
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/badges/quality-score.png?s=6a3eaf6df96443eca1ac8b0ab68aac87e4b60cd8)](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/)
+[![Code Coverage](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/badges/coverage.png?s=cdd39a30828aeb528df12444cb3704c8a419b50e)](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/)
 [![Build Status](https://travis-ci.org/auraphp/Aura.Autoload.png?branch=develop-2)](https://travis-ci.org/auraphp/Aura.Autoload)
 
 This library has 100% code coverage with [PHPUnit][]. To run the tests at the
 command line, go to the _tests_ directory and issue `phpunit`.
 
 [PHPUnit]: http://phpunit.de/manual/
-
-### PSR Compliance
 
 This library attempts to comply with [PSR-1][], [PSR-2][], and [PSR-4][]. If
 you notice compliance oversights, please send a patch via pull request.
