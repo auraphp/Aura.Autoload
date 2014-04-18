@@ -10,9 +10,9 @@ project.
 
 This library requires PHP 5.3 or later, and has no userland dependencies.
 
-It is installable and autoloadable via Composer as [`aura/autoload`](https://packagist.org/packages/aura/autoload).
+It is installable and autoloadable via Composer as [aura/autoload](https://packagist.org/packages/aura/autoload).
 
-Alternatively, [download a release](/releases) or clone this repository, then require or include its _autoload.php_ file.
+Alternatively, [download a release](https://github.com/auraphp/Aura.Autoload/releases) or clone this repository, then require or include its _autoload.php_ file.
 
 ### Quality
 
