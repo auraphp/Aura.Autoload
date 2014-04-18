@@ -90,6 +90,8 @@ namespace separators in the class names (no underscores allowed!), point to
 the directory containing classes for that namespace. Multiple directories are
 allowed, and will be searched in the order they are added.
 
+[PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+
 ```php
 <?php
 $loader->addPrefix('Baz\Dib', '/path/to/baz-dib/src/Baz/Dib');
