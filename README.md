@@ -20,17 +20,16 @@ Alternatively, [download a release](https://github.com/auraphp/Aura.Autoload/rel
 [![Code Coverage](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/badges/coverage.png?s=cdd39a30828aeb528df12444cb3704c8a419b50e)](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/)
 [![Build Status](https://travis-ci.org/auraphp/Aura.Autoload.png?branch=develop-2)](https://travis-ci.org/auraphp/Aura.Autoload)
 
-This library has 100% code coverage with [PHPUnit][]. To run the tests at the
-command line, go to the _tests_ directory and issue `phpunit`.
-
-[PHPUnit]: http://phpunit.de/manual/
+To run the [PHPUnit][] tests at the command line, go to the _tests_ directory and issue `phpunit`.
 
 This library attempts to comply with [PSR-1][], [PSR-2][], and [PSR-4][]. If
 you notice compliance oversights, please send a patch via pull request.
 
+[PHPUnit]: http://phpunit.de/manual/
 [PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 [PSR-4]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md
+
 
 ### Community
 
