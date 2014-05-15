@@ -1,8 +1,10 @@
 # Aura.Autoload
 
-Provides a PSR-4 (and limited PSR-0) autoloading facility. Although it is
+Provides a full PSR-4 and limited PSR-0 autoloader. Although it is
 installable via Composer, its best use is probably outside a Composer-oriented
 project.
+
+For a full PSR-0 only autoloader, please see [Aura.Autoload v1](https://github.com/auraphp/Aura.Autoload/tree/develop).
 
 ## Foreword
 
