@@ -1,69 +1,69 @@
 <?php
 /**
- * 
+ *
  * This file is part of Aura for PHP.
- * 
+ *
  * @package Aura.Autoload
- * 
+ *
  * @license http://opensource.org/licenses/bsd-license.php BSD
- * 
+ *
  */
 namespace Aura\Autoload;
 
 /**
- * 
+ *
  * An SPL autoloader adhering to PSR-4.
- * 
+ *
  * @package Aura.Autoload
- * 
+ *
  */
 class Loader
 {
     /**
-     * 
+     *
      * A map of explicit class names to their file paths.
-     * 
+     *
      * @var array
-     * 
+     *
      */
     protected $class_files = array();
 
     /**
-     * 
+     *
      * Debug information populated by loadClass().
-     * 
+     *
      * @var array
-     * 
+     *
      */
     protected $debug = array();
 
     /**
-     * 
+     *
      * Classes, interfaces, and traits loaded by the autoloader; the key is
      * the class name and the value is the file name.
-     * 
+     *
      * @var array
-     * 
+     *
      */
     protected $loaded_classes = array();
 
     /**
-     * 
+     *
      * A map of namespace prefixes to base directories.
-     * 
+     *
      * @var array
-     * 
+     *
      */
     protected $prefixes = array();
 
     /**
-     * 
+     *
      * Registers this autoloader with SPL.
-     * 
+     *
      * @param bool $prepend True to prepend to the autoload stack.
-     * 
+     *
      * @return null
-     * 
+     *
      */
     public function register($prepend = false)
     {
@@ -75,11 +75,11 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Unregisters this autoloader from SPL.
-     * 
+     *
      * @return null
-     * 
+     *
      */
     public function unregister()
     {
@@ -87,51 +87,51 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Returns the debugging information array from the last loadClass()
      * attempt.
-     * 
+     *
      * @return array
-     * 
+     *
      */
     public function getDebug()
     {
         return $this->debug;
     }
-    
+
     /**
-     * 
+     *
      * Adds a base directory for a namespace prefix.
      *
      * @param string $prefix The namespace prefix.
-     * 
+     *
      * @param string|array $base_dirs One or more base directories for the
      * namespace prefix.
-     * 
+     *
      * @param bool $prepend If true, prepend the base directories to the
      * prefix instead of appending them; this causes them to be searched
      * first rather than last.
-     * 
+     *
      * @return null
-     * 
+     *
      */
     public function addPrefix($prefix, $base_dirs, $prepend = false)
     {
         // normalize the namespace prefix
         $prefix = trim($prefix, '\\') . '\\';
-        
+
         // initialize the namespace prefix array if needed
         if (! isset($this->prefixes[$prefix])) {
             $this->prefixes[$prefix] = array();
         }
-        
+
         // normalize each base dir with a trailing separator
         $base_dirs = (array) $base_dirs;
         foreach ($base_dirs as $key => $base_dir) {
             $base_dirs[$key] = rtrim($base_dir, DIRECTORY_SEPARATOR)
                              . DIRECTORY_SEPARATOR;
         }
-        
+
         // prepend or append?
         if ($prepend) {
             $this->prefixes[$prefix] = array_merge($base_dirs, $this->prefixes[$prefix]);
@@ -141,15 +141,15 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Sets all namespace prefixes and their base directories. This overwrites
      * the existing prefixes.
-     * 
+     *
      * @param array $prefixes An associative array of namespace prefixes and
      * their base directories.
-     * 
+     *
      * @return null
-     * 
+     *
      */
     public function setPrefixes(array $prefixes)
     {
@@ -160,11 +160,11 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Returns the list of all class name prefixes and their base directories.
-     * 
+     *
      * @return array
-     * 
+     *
      */
     public function getPrefixes()
     {
@@ -172,15 +172,15 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Sets the explicit file path for an explicit class name.
-     * 
+     *
      * @param string $class The explicit class name.
-     * 
+     *
      * @param string $file The file path to that class.
-     * 
+     *
      * @return null
-     * 
+     *
      */
     public function setClassFile($class, $file)
     {
@@ -188,15 +188,15 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Sets all file paths for all class names; this overwrites all previous
      * explicit mappings.
-     * 
+     *
      * @param array $class_files An array of class-to-file mappings where the
      * key is the class name and the value is the file path.
-     * 
+     *
      * @return null
-     * 
+     *
      */
     public function setClassFiles(array $class_files)
     {
@@ -204,14 +204,14 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Adds file paths for class names to the existing explicit mappings.
-     * 
+     *
      * @param array $class_files An array of class-to-file mappings where the
      * key is the class name and the value is the file path.
-     * 
+     *
      * @return null
-     * 
+     *
      */
     public function addClassFiles(array $class_files)
     {
@@ -219,11 +219,11 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Returns the list of explicit class names and their file paths.
-     * 
+     *
      * @return array
-     * 
+     *
      */
     public function getClassFiles()
     {
@@ -231,13 +231,13 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Returns the list of classes, interfaces, and traits loaded by the
      * autoloader.
-     * 
+     *
      * @return array An array of key-value pairs where the key is the class
      * or interface name and the value is the file name.
-     * 
+     *
      */
     public function getLoadedClasses()
     {
@@ -245,11 +245,11 @@ class Loader
     }
 
     /**
-     * 
+     *
      * Loads the class file for a given class name.
      *
      * @param string $class The fully-qualified class name.
-     * 
+     *
      * @return mixed The mapped file name on success, or boolean false on
      * failure.
      *
@@ -258,7 +258,7 @@ class Loader
     {
         // reset debug info
         $this->debug = array("Loading $class");
-        
+
         // is an explicit class file noted?
         if (isset($this->class_files[$class])) {
             $file = $this->class_files[$class];
@@ -269,17 +269,17 @@ class Loader
                 return $file;
             }
         }
-        
+
         // no explicit class file
         $this->debug[] = "No explicit class file";
-        
+
         // the current namespace prefix
         $prefix = $class;
-        
+
         // work backwards through the namespace names of the fully-qualified
         // class name to find a mapped file name
         while (false !== $pos = strrpos($prefix, '\\')) {
-            
+
             // retain the trailing namespace separator in the prefix
             $prefix = substr($class, 0, $pos + 1);
 
@@ -296,25 +296,25 @@ class Loader
 
             // remove the trailing namespace separator for the next iteration
             // of strrpos()
-            $prefix = rtrim($prefix, '\\');   
+            $prefix = rtrim($prefix, '\\');
         }
-        
+
         // did not find a file for the class
         $this->debug[] = "$class not loaded";
         return false;
     }
 
     /**
-     * 
+     *
      * Load the mapped file for a namespace prefix and relative class.
-     * 
+     *
      * @param string $prefix The namespace prefix.
-     * 
+     *
      * @param string $relative_class The relative class name.
-     * 
+     *
      * @return mixed Boolean false if no mapped file can be loaded, or the
      * name of the mapped file that was loaded.
-     * 
+     *
      */
     protected function loadFile($prefix, $relative_class)
     {
@@ -323,7 +323,7 @@ class Loader
             $this->debug[] = "$prefix: no base dirs";
             return false;
         }
-        
+
         // look through base directories for this namespace prefix
         foreach ($this->prefixes[$prefix] as $base_dir) {
 
@@ -333,29 +333,29 @@ class Loader
             $file = $base_dir
                   . str_replace('\\', DIRECTORY_SEPARATOR, $relative_class)
                   . '.php';
-    
+
             // if the mapped file exists, require it
             if ($this->requireFile($file)) {
                 // yes, we're done
                 return $file;
             }
-            
+
             // not in the base directory
             $this->debug[] = "$prefix: $file not found";
         }
-        
+
         // never found it
         return false;
     }
-    
+
     /**
-     * 
+     *
      * If a file exists, require it from the file system.
-     * 
+     *
      * @param string $file The file to require.
-     * 
+     *
      * @return bool True if the file exists, false if not.
-     * 
+     *
      */
     protected function requireFile($file)
     {
