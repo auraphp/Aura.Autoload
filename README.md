@@ -18,8 +18,8 @@ Alternatively, [download a release](https://github.com/auraphp/Aura.Autoload/rel
 
 ### Quality
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/badges/quality-score.png?s=6a3eaf6df96443eca1ac8b0ab68aac87e4b60cd8)](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/)
-[![Code Coverage](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/badges/coverage.png?s=cdd39a30828aeb528df12444cb3704c8a419b50e)](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/badges/quality-score.png?b=develop-2)](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/)
+[![Code Coverage](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/badges/coverage.png?b=develop-2)](https://scrutinizer-ci.com/g/auraphp/Aura.Autoload/)
 [![Build Status](https://travis-ci.org/auraphp/Aura.Autoload.png?branch=develop-2)](https://travis-ci.org/auraphp/Aura.Autoload)
 
 To run the [PHPUnit][] tests at the command line, go to the _tests_ directory and issue `phpunit`.
@@ -76,7 +76,7 @@ $loader->setPrefixes(array(
         '/path/to/foo-bar/src',
         '/path/to/foo-bar/tests',
     ),
-    
+
     'Baz\Dib' => array(
         '/path/to/baz.dib/src',
         '/path/to/baz.dib/tests',
@@ -133,7 +133,7 @@ These methods are available to inspect the `Loader`:
 
 - `getPrefixes()` returns all the added namespace prefixes and their base
   directories
-  
+
 - `getClassFiles()` returns all the explicit class-to-file mappings
 
 - `getLoadedClasses()` returns all the class names loaded by the `Loader` and
