@@ -10,7 +10,7 @@ For a full PSR-0 only autoloader, please see [Aura.Autoload v1](https://github.c
 
 ### Installation
 
-This library requires PHP 5.3 or later, and has no userland dependencies.
+This library requires PHP 5.3 or later; we recommend using the latest available version of PHP as a matter of principle. It has no userland dependencies.
 
 It is installable and autoloadable via Composer as [aura/autoload](https://packagist.org/packages/aura/autoload).
 
