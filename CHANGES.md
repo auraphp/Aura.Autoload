@@ -1,1 +1,1 @@
-This release modifies autoload.php file to use the correct paths.
+This release corrects the README to show the correct phpunit command.
