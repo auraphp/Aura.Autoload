@@ -19,10 +19,5 @@
         "psr-0": {
             "Aura\\Autoload": "src/"
         }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-develop": "1.0.x-dev"
-        }
     }
 }
