@@ -14,9 +14,20 @@ jobs:
       fail-fast: false
       matrix:
         php-version:
+          - '5.6'
+          - '7.0'
+          - '7.1'
+          - '7.2'
+          - '7.3'
+          - '7.4'
+          - '8.0'
+          - '8.1'
           - '8.2'
           - '8.3'
           - '8.4'
+          - '8.5'
+
+    name: PHP ${{ matrix.php-version }}
 
     steps:
       - name: Checkout
@@ -28,7 +39,8 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: 
           coverage: none
-          tools: composer:v2
+          # Composer 2.3+ needs PHP 7.2.5; the 2.2 LTS line still runs on 5.6.
+          tools: ${{ contains(fromJSON('["5.6","7.0","7.1"]'), matrix.php-version) && 'composer:v2.2' || 'composer:v2' }}
 
       - name: Get composer cache directory
         id: composer-cache
@@ -38,11 +50,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
+          key: ${{ runner.os }}-php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-php${{ matrix.php-version }}-composer-
 
+      # update, not install: no lock file is committed, so each PHP version
+      # resolves the PHPUnit and polyfill versions that support it.
       - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist
+        run: composer update --no-interaction --prefer-dist
 
       - name: Validate composer.json
         run: composer validate --no-check-lock --no-check-publish

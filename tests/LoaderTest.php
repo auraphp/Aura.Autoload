@@ -1,13 +1,13 @@
 <?php
 namespace Aura\Autoload;
 
-class LoaderTest extends \PHPUnit\Framework\TestCase
+class LoaderTest extends \Yoast\PHPUnitPolyfills\TestCases\TestCase
 {
     protected $loader;
 
     protected $base_dir;
 
-    protected function setUp(): void
+    protected function set_up()
     {
         $this->loader = new Loader;
     }
