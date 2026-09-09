@@ -1,13 +1,13 @@
 <?php
 namespace Aura\Autoload;
 
-class LoaderTest extends \PHPUnit_Framework_TestCase
+class LoaderTest extends \PHPUnit\Framework\TestCase
 {
     protected $loader;
 
     protected $base_dir;
 
-    protected function setup()
+    protected function setUp(): void
     {
         $this->loader = new Loader;
     }
@@ -195,9 +195,16 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect, $actual);
     }
 
-    // normalize directory separators in file names for windows compatibilitys
+    // normalize directory separators in file names for windows compatibility.
+    // recurses, because getPrefixes() returns base dirs nested one level under
+    // each prefix -- str_replace() on a nested array stringifies the inner
+    // arrays to 'Array' instead of descending into them.
     protected function nds($file)
     {
+        if (is_array($file)) {
+            return array_map(array($this, 'nds'), $file);
+        }
+
         return str_replace('/', DIRECTORY_SEPARATOR, $file);
     }
 }

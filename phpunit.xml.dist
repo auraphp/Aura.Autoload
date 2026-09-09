@@ -1,7 +1,18 @@
-<phpunit bootstrap="./phpunit.php">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="./phpunit.php"
+         colors="true"
+         failOnWarning="true"
+         failOnDeprecation="true">
     <testsuites>
-        <testsuite>
+        <testsuite name="Aura.Autoload">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
 </phpunit>
